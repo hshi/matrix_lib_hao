@@ -52,11 +52,13 @@ namespace matrix_hao_lib
      {
          if(x.owns) {base_array=new T[x.L_f()];std::copy(x.base_array,x.base_array+x.L_f(),base_array);}
          else       {base_array=x.base_array;}
+         //std::cout<<"copy constructor"<<std::endl;
      }
      //Move constructor:
      Matrix_base(Matrix_base<T>&& x): L(x.L_f()),base_array(x.base_array),owns(x.owns),type(x.type)
      {
          if(x.owns) x.base_array=nullptr;
+         //std::cout<<"move constructor"<<std::endl;
      } 
     
      

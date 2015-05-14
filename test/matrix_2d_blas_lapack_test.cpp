@@ -14,13 +14,7 @@ namespace matrix_hao_lib
      Matrix<float,2> c(2,2);
      Matrix<float,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
      gmm(a,b,c);
-     //cout<<setprecision(10);
-     //cout<<c<<endl;
-     size_t flag=0;
-     for(size_t i=0; i<c.L1; i++)
-     {
-         for(size_t j=0; j<c.L2; j++) {if(abs(c(i,j)-c_exact(i,j))>1e-5) flag++;}
-     }
+     size_t flag=diff(c,c_exact,1e-5);
      if(flag==0) cout<<"Gmm passed float test! \n";
      else cout<<"WARNING!!!!!!!!! Gmm failed float test! \n";
  }
@@ -34,13 +28,7 @@ namespace matrix_hao_lib
      Matrix<double,2> c(2,2);
      Matrix<double,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
      gmm(a,b,c);
-     //cout<<setprecision(10);
-     //cout<<c<<endl;
-     size_t flag=0;
-     for(size_t i=0; i<c.L1; i++)
-     {
-         for(size_t j=0; j<c.L2; j++) {if(abs(c(i,j)-c_exact(i,j))>1e-13) flag++;}
-     }
+     size_t flag=diff(c,c_exact,1e-13);
      if(flag==0) cout<<"Gmm passed double test! \n";
      else cout<<"WARNING!!!!!!!!! Gmm failed double test! \n";
  }
@@ -57,13 +45,7 @@ namespace matrix_hao_lib
                                          {-17.756,56.71},  {-22.838971, 66.77106} }
                                        };
      gmm(a,b,c);
-     //cout<<setprecision(10);
-     //cout<<c<<endl;
-     size_t flag=0;
-     for(size_t i=0; i<c.L1; i++)
-     {
-         for(size_t j=0; j<c.L2; j++) {if(abs(c(i,j)-c_exact(i,j))>1e-5) flag++;}
-     }
+     size_t flag=diff(c,c_exact,1e-5);
      if(flag==0) cout<<"Gmm passed complex float test! \n";
      else cout<<"WARNING!!!!!!!!! Gmm failed complex float test! \n";
  }
@@ -83,12 +65,7 @@ namespace matrix_hao_lib
                                          {-17.756,56.71},  {-22.838971, 66.77106} }
                                        }; 
      gmm(a,b,c);
-
-     size_t flag=0;
-     for(size_t i=0; i<c.L1; i++)
-     {
-         for(size_t j=0; j<c.L2; j++) {if(abs(c(i,j)-c_exact(i,j))>1e-13) flag++;}
-     }
+     size_t flag=diff(c,c_exact,1e-13);
      if(flag==0) cout<<"Gmm passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! Gmm failed complex double test! \n";
  }
@@ -117,11 +94,13 @@ namespace matrix_hao_lib
      size_t flag=0;
      for(size_t i=0; i<a.L1; i++)
      {
-         for(size_t j=0; j<a.L2; j++) {if(abs(abs(a(i,j))-abs(a_exact(i,j)))>1e-13) flag++;}
+         for(size_t j=0; j<a.L2; j++) 
+             {
+                 //Use both abs to avoid unexpected sign in each column
+                 if(abs(abs(a(i,j))-abs(a_exact(i,j)))>1e-13) flag++;
+             }
      }
-
-     for(size_t i=0; i<w.L1; i++) {if(abs(w(i)-w_exact(i))>1e-13) flag++;}
-
+     flag+=diff(w,w_exact,1e-13);
      if(flag==0) cout<<"Eigen passed Hermition test! \n";
      else cout<<"WARNING!!!!!!!!! Eigen failed Hermintion test! \n";
      //cout<<setprecision(16);
@@ -141,35 +120,19 @@ namespace matrix_hao_lib
                                         {5.123,-6.11},{-1.05914748,4.42519664},{-0.14942307391746978,-5.208155953378981} } };
 
      size_t flag=0;
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(LU.A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
+     flag+=diff(LU.A,A_exact,1e-13); 
 
      LUDecomp<complex<double>> LUC(LU);
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(LUC.A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
+     flag+=diff(LUC.A,A_exact,1e-13);
 
      LUDecomp<complex<double>> LUR(std::move(LU));
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(LUR.A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
+     flag+=diff(LUR.A,A_exact,1e-13);
 
      LUDecomp<complex<double>> LUEC;LUEC=LUC;
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(LUEC.A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
-
+     flag+=diff(LUEC.A,A_exact,1e-13);
 
      LUDecomp<complex<double>> LUER;LUER=std::move(LUR);
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(LUER.A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
+     flag+=diff(LUER.A,A_exact,1e-13);
 
 
      if(flag==0) cout<<"LUDecomp passed complex double test! \n";
@@ -184,7 +147,7 @@ namespace matrix_hao_lib
                                         {2.123,-5.11},{5.123,-6.11},{3,0.0} } };
      complex<double> det=determinant(LUDecomp<complex<double>>(A));
      complex<double> det_exact={123.11968700000003,3.3324580000000115};
-     if(abs(det-det_exact)<1e-13) cout<<"Determinant passed complex double test! \n";
+     if(abs(det-det_exact)<1e-12) cout<<"Determinant passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! Determinant failed complex double test! \n";
      //cout<<setprecision(16);
      //cout<<det<<"\n";
@@ -220,11 +183,7 @@ namespace matrix_hao_lib
                                               {0.17584867623524927,-0.010672609392757534},
                                               {-0.12306156095719788,-0.04540218264765162} } };
      A=inverse(LUDecomp<complex<double>>(A));
-     size_t flag=0;
-     for(size_t i=0; i<A_exact.L1; i++)
-     {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(A(i,j)-A_exact(i,j))>1e-13) flag++;}
-     }
+     size_t flag=diff(A,A_exact,1e-13);
      if(flag==0) cout<<"Inverse passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! Inverse failed complex double test! \n";
  }
@@ -244,11 +203,7 @@ namespace matrix_hao_lib
                                               {0.6299516251873555,0.037643960766659545},} };
      Matrix<complex<double>,2> X=solve_lineq(LUDecomp<complex<double>>(A),B);
 
-     size_t flag=0;
-     for(size_t i=0; i<X_exact.L1; i++)
-     {
-         for(size_t j=0; j<X_exact.L2; j++) {if(abs(X(i,j)-X_exact(i,j))>1e-13) flag++;}
-     }
+     size_t flag=diff(X,X_exact,1e-13);
      if(flag==0) cout<<"Solve_lineq passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! Solve_lineq failed complex double test! \n";
 
@@ -269,7 +224,7 @@ namespace matrix_hao_lib
      size_t flag=0;
      for(size_t i=0; i<A_exact.L1; i++)
      {
-         for(size_t j=0; j<A_exact.L2; j++) {if(abs(abs(A(i,j))-abs(A_exact(i,j)))>1e-12) flag++;}
+         for(size_t j=0; j<A_exact.L2; j++) {if(abs(abs(A(i,j))-abs(A_exact(i,j)))>1e-12) flag++;} //Use abs for unexpected sign
      }
      if(abs(det-det_exact)>1e-12) flag++;
      if(flag==0) cout<<"QRMatrix passed complex double test! \n";
@@ -287,11 +242,7 @@ namespace matrix_hao_lib
      Matrix<complex<double>,2> B=D_Multi_Matrix(D,A);
      Matrix<complex<double>,2> B_exact={3,2,{ {2.4,0.0} ,   {6.0,10.0},    {9.369,9.33},
                                               {3.6,-7.2},   {4.0,2.0 },    {18.369,9.33},} };
-     size_t flag=0;
-     for(size_t i=0; i<B_exact.L1; i++)
-     {
-         for(size_t j=0; j<B_exact.L2; j++) {if(abs(abs(B(i,j))-abs(B_exact(i,j)))>1e-12) flag++;}
-     }
+     size_t flag=diff(B,B_exact,1e-12);
      if(flag==0) cout<<"D_Multi_Matrix passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! D_Multi_Matrix failed complex double test! \n"; 
  }

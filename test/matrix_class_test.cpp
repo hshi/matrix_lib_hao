@@ -5,6 +5,17 @@ using namespace std;
 namespace matrix_hao_lib
 {
 
+ void matrix_diff_test()
+ {
+     Matrix<complex<double>,2>    A={2,3,{ {0.0,1.0},{5.0,2.0},{0.123,0.31},
+                                           {0.0,2.0},{3.0,4.0},{0.123,0.21} }};
+     Matrix<complex<double>,2>    B={2,3,{ {0.2,1.0},{5.0,2.0},{0.123,0.3121},
+                                           {0.0,2.0},{3.0,4.0},{0.123,0.21222} }};
+     size_t flag=diff(A,B,1e-12);
+     if(flag==3) cout<<"Matrix diff passed 2D complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Matrix diff failed 2D complex double test! \n";
+ }
+
  void matrix_1d_c_slicing()
  {
      Matrix<double,1> A={4,{14.861,12.630129,20.984,23.753129}};
@@ -159,8 +170,10 @@ namespace matrix_hao_lib
      //cout<<flag<<endl;
  }
 
+
  void matrix_class_test()
  {
+     matrix_diff_test();
      matrix_1d_c_slicing();
      matrix_2d_c_slicing();
      matrix_3d_c_slicing();
@@ -169,4 +182,5 @@ namespace matrix_hao_lib
      matrix_exp_test();
      return;
  }
+
 }

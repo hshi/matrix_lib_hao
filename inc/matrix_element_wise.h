@@ -3,6 +3,7 @@
 
 #include <cmath>
 
+
 namespace matrix_hao_lib
 {
 
@@ -94,6 +95,20 @@ namespace matrix_hao_lib
  Matrix<T,D> operator / (const T & B,const Matrix<T,D>& A) {Matrix<T,D> C;C=A; C.inv_div_equal(B);return C;}
  template <class T, int D>
  Matrix<T,D> operator / (const T & B,Matrix<T,D>&& A)      {Matrix<T,D> C;C=std::move(A);C.inv_div_equal(B);return C;}
+
+ //for diff: return the different elements in two matrix
+ template <class T, int D>
+ size_t diff(const Matrix<T,D>& A, const Matrix<T,D>& B, double eta)
+ {
+    //Use std::abs instead of abs is very important here since it is in header file
+    //For normal cpp file, if we use " using namespace std; ", we are using std:abs
+    //To see the difference, run the following line:
+    //std::cout<<abs(0.123)<<" "<<std::abs(0.123)<<std::endl;
+
+    size_t flag=0; double abs_eta=std::abs(eta);
+    for(size_t i=0; i<A.L_f(); i++) {if( std::abs( A.base_array[i]-B.base_array[i] )> abs_eta  ) flag++;}
+    return flag;
+ }
 
 } //end namespace matrix_hao_lib
 

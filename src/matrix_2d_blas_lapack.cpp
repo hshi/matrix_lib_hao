@@ -4,6 +4,7 @@
 using std::complex;
 using std::conj;
 using std::cout;
+using std::abs;
 
 namespace matrix_hao_lib
 {

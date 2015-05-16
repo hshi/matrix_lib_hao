@@ -5,7 +5,7 @@ using namespace std;
 namespace matrix_hao_lib
 {
 
- void gmm_float_test()
+ void gmm_cpu_float_test()
  {
      Matrix<float,2> a={2,3,{0.0,3.0,2.123,
                              2.0,4.0,3.123 }};
@@ -13,13 +13,13 @@ namespace matrix_hao_lib
                              2.0,4.0,3.123 }};
      Matrix<float,2> c(2,2);
      Matrix<float,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
-     gmm(a,b,c);
+     gmm_cpu(a,b,c);
      size_t flag=diff(c,c_exact,1e-5);
-     if(flag==0) cout<<"Gmm passed float test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm failed float test! \n";
+     if(flag==0) cout<<"Gmm_cpu passed float test! \n";
+     else cout<<"WARNING!!!!!!!!! Gmm_cpu failed float test! \n";
  }
 
- void gmm_double_test()
+ void gmm_cpu_double_test()
  {
      Matrix<double,2> a={2,3,{0.0,3.0,2.123,
                              2.0,4.0,3.123 }};
@@ -27,13 +27,13 @@ namespace matrix_hao_lib
                              2.0,4.0,3.123 }};
      Matrix<double,2> c(2,2);
      Matrix<double,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
-     gmm(a,b,c);
+     gmm_cpu(a,b,c);
      size_t flag=diff(c,c_exact,1e-13);
-     if(flag==0) cout<<"Gmm passed double test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm failed double test! \n";
+     if(flag==0) cout<<"Gmm_cpu passed double test! \n";
+     else cout<<"WARNING!!!!!!!!! Gmm_cpu failed double test! \n";
  }
 
- void gmm_complexfloat_test()
+ void gmm_cpu_complexfloat_test()
  {
      Matrix<complex<float>,2> a={2,3,{ {0.0,0.8},{3.0,4.0},{2.123,3.11},
                                        {2.0,3.3},{4.0,5.0},{3.123,4.11} } };
@@ -44,16 +44,16 @@ namespace matrix_hao_lib
                                        { {-13.769,40.877}, {-16.551971,38.73806},
                                          {-17.756,56.71},  {-22.838971, 66.77106} }
                                        };
-     gmm(a,b,c);
+     gmm_cpu(a,b,c);
      size_t flag=diff(c,c_exact,1e-5);
-     if(flag==0) cout<<"Gmm passed complex float test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm failed complex float test! \n";
+     if(flag==0) cout<<"Gmm_cpu passed complex float test! \n";
+     else cout<<"WARNING!!!!!!!!! Gmm_cpu failed complex float test! \n";
  }
 
 
 
 
- void gmm_complexdouble_test()
+ void gmm_cpu_complexdouble_test()
  {
      Matrix<complex<double>,2> a={2,3,{ {0.0,0.8},{3.0,4.0},{2.123,3.11},
                                         {2.0,3.3},{4.0,5.0},{3.123,4.11} } };
@@ -64,21 +64,21 @@ namespace matrix_hao_lib
                                        { {-13.769,40.877}, {-16.551971,38.73806}, 
                                          {-17.756,56.71},  {-22.838971, 66.77106} }
                                        }; 
-     gmm(a,b,c);
+     gmm_cpu(a,b,c);
      size_t flag=diff(c,c_exact,1e-13);
-     if(flag==0) cout<<"Gmm passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm failed complex double test! \n";
+     if(flag==0) cout<<"Gmm_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Gmm_cpu failed complex double test! \n";
  }
  
 
- void eigen_test()
+ void eigen_cpu_test()
  {
      Matrix<complex<double>,2> a={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
                                         {3.0,-4.0},   {2.0,0.0},    {5.123,3.11},
                                         {2.123,-3.11},{5.123,-3.11},{3,0.0}     } };
      Matrix<double,1> w(3);
      check_Hermitian(a);
-     eigen(a,w);
+     eigen_cpu(a,w);
 
      Matrix<complex<double>,2> a_exact={3,3,{ {-0.4053433965286621, -0.3217472918461721},
                                               {-0.3733963692733272,  0.6060804552476304},    
@@ -101,74 +101,32 @@ namespace matrix_hao_lib
              }
      }
      flag+=diff(w,w_exact,1e-13);
-     if(flag==0) cout<<"Eigen passed Hermition test! \n";
-     else cout<<"WARNING!!!!!!!!! Eigen failed Hermintion test! \n";
+     if(flag==0) cout<<"Eigen_cpu passed Hermition test! \n";
+     else cout<<"WARNING!!!!!!!!! Eigen_cpu failed Hermintion test! \n";
      //cout<<setprecision(16);
      //cout<<w<<endl;
      //cout<<a<<endl;
  }
 
- void LUDecomp_test()
+ void LUconstruct_cpu_test()
  {
-     Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11}, 
+     Matrix<complex<double>,2> X={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11}, 
                                         {3.0,-2.0},   {2.0,0.0},    {5.123,3.11}, 
                                         {2.123,-5.11},{5.123,-6.11},{3,0.0} } };
-     LUDecomp<complex<double>> LU(A);
+     LUDecomp<complex<double>> LU=LUconstruct_cpu(X);
 
      Matrix<complex<double>,2> A_exact={3,3,{ {3,4} ,   {0.75236,0.03351999999999994}, {0.12,-0.16},
                                         {2,0},   {3.6182800000000004,3.04296},    {0.21807341113346007,-0.647707935025115},
                                         {5.123,-6.11},{-1.05914748,4.42519664},{-0.14942307391746978,-5.208155953378981} } };
 
-     size_t flag=0;
-     flag+=diff(LU.A,A_exact,1e-13); 
+     size_t flag=diff(LU.A,A_exact,1e-13); 
 
-     LUDecomp<complex<double>> LUC(LU);
-     flag+=diff(LUC.A,A_exact,1e-13);
-
-     LUDecomp<complex<double>> LUR(std::move(LU));
-     flag+=diff(LUR.A,A_exact,1e-13);
-
-     LUDecomp<complex<double>> LUEC;LUEC=LUC;
-     flag+=diff(LUEC.A,A_exact,1e-13);
-
-     LUDecomp<complex<double>> LUER;LUER=std::move(LUR);
-     flag+=diff(LUER.A,A_exact,1e-13);
-
-
-     if(flag==0) cout<<"LUDecomp passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! LUDecomp failed complex double test! \n";
+     if(flag==0) cout<<"LUconstruct_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! LUconstruct_cpu failed complex double test! \n";
  }
 
 
- void determinant_test()
- {
-     Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
-                                        {3.0,-2.0},   {2.0,0.0},    {5.123,3.11},
-                                        {2.123,-5.11},{5.123,-6.11},{3,0.0} } };
-     complex<double> det=determinant(LUDecomp<complex<double>>(A));
-     complex<double> det_exact={123.11968700000003,3.3324580000000115};
-     if(abs(det-det_exact)<1e-12) cout<<"Determinant passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Determinant failed complex double test! \n";
-     //cout<<setprecision(16);
-     //cout<<det<<"\n";
- }
-
- void log_determinant_test()
- {
-     Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
-                                        {3.0,-2.0},   {2.0,0.0},    {5.123,3.11},
-                                        {2.123,-5.11},{5.123,-6.11},{3,0.0} } };
-     A*=1.e103;
-     complex<double> logdet=log_determinant(LUDecomp<complex<double>>(A));
-     complex<double> logdet_exact={716.3123168546207,0.027060209772387683};
-     if(abs(logdet-logdet_exact)<1e-12) cout<<"Log_determinant passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Log_determinant failed complex double test! \n";
-     //cout<<abs(logdet-logdet_exact)<<"\n";
-     //cout<<setprecision(16);
-     //cout<<logdet<<"\n";
- }
-
- void inverse_test()
+ void inverse_cpu_test()
  {
      Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
                                         {3.0,-2.0},   {2.0,0.0},    {5.123,3.11},
@@ -182,13 +140,13 @@ namespace matrix_hao_lib
                                               {-0.01293596267860185,-0.1487405620815458},
                                               {0.17584867623524927,-0.010672609392757534},
                                               {-0.12306156095719788,-0.04540218264765162} } };
-     A=inverse(LUDecomp<complex<double>>(A));
+     A=inverse_cpu( LUconstruct_cpu(A) );
      size_t flag=diff(A,A_exact,1e-13);
-     if(flag==0) cout<<"Inverse passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Inverse failed complex double test! \n";
+     if(flag==0) cout<<"Inverse_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Inverse_cpu failed complex double test! \n";
  }
 
- void solve_lineq_test()
+ void solve_lineq_cpu_test()
  {
      Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
                                         {3.0,-2.0},   {2.0,0.0},    {5.123,3.11},
@@ -201,19 +159,19 @@ namespace matrix_hao_lib
                                               {0.6345942167676883, 1.253141477086266},   
                                               {0.825768240961444,-0.8208234397212029},   
                                               {0.6299516251873555,0.037643960766659545},} };
-     Matrix<complex<double>,2> X=solve_lineq(LUDecomp<complex<double>>(A),B);
+     Matrix<complex<double>,2> X=solve_lineq_cpu( LUconstruct_cpu(A),B );
 
      size_t flag=diff(X,X_exact,1e-13);
-     if(flag==0) cout<<"Solve_lineq passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Solve_lineq failed complex double test! \n";
+     if(flag==0) cout<<"Solve_lineq_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Solve_lineq_cpu failed complex double test! \n";
 
  } 
 
- void QRMatrix_test()
+ void QRMatrix_cpu_test()
  {
      Matrix<complex<double>,2> A={3,2,{ {2.0,0.0} ,   {3.0,5.0},    {3.123,3.11},
                                         {3.0,-6.0},   {2.0,1.0},    {6.123,3.11},} };
-     double det=QRMatrix(A);
+     double det=QRMatrix_cpu(A);
      Matrix<complex<double>,2> A_exact={3,2,{ {-0.26392384387316437, 0} ,   
                                               {-0.3958857658097466 , 0.6598096096829109},    
                                               {-0.41211708220794624, 0.41040157722277065},
@@ -227,41 +185,25 @@ namespace matrix_hao_lib
          for(size_t j=0; j<A_exact.L2; j++) {if(abs(abs(A(i,j))-abs(A_exact(i,j)))>1e-12) flag++;} //Use abs for unexpected sign
      }
      if(abs(det-det_exact)>1e-12) flag++;
-     if(flag==0) cout<<"QRMatrix passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! QRMatrix failed complex double test! \n";
+     if(flag==0) cout<<"QRMatrix_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! QRMatrix_cpu failed complex double test! \n";
      //cout<<setprecision(16);
      //cout<<A<<endl;
      //cout<<det<<endl;
  }
 
- void D_Multi_Matrix_test()
- {
-     Matrix<complex<double>,2> A={3,2,{ {2.0,0.0} ,   {3.0,5.0},    {3.123,3.11},
-                                        {3.0,-6.0},   {2.0,1.0},    {6.123,3.11},} };
-     Matrix<complex<double>,1> D={3, { {1.2,0.0},{2.0,0.0},{3.0,0.0} } };
-     Matrix<complex<double>,2> B=D_Multi_Matrix(D,A);
-     Matrix<complex<double>,2> B_exact={3,2,{ {2.4,0.0} ,   {6.0,10.0},    {9.369,9.33},
-                                              {3.6,-7.2},   {4.0,2.0 },    {18.369,9.33},} };
-     size_t flag=diff(B,B_exact,1e-12);
-     if(flag==0) cout<<"D_Multi_Matrix passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! D_Multi_Matrix failed complex double test! \n"; 
- }
 
-
- void matrix_2d_blas_lapack_test()
+ void matrix_2d_bl_cpu_test()
  {
-     gmm_float_test();
-     gmm_double_test();
-     gmm_complexfloat_test();
-     gmm_complexdouble_test();
-     eigen_test();
-     LUDecomp_test();
-     determinant_test();
-     log_determinant_test();
-     inverse_test();
-     solve_lineq_test();
-     QRMatrix_test();
-     D_Multi_Matrix_test();
+     gmm_cpu_float_test();
+     gmm_cpu_double_test();
+     gmm_cpu_complexfloat_test();
+     gmm_cpu_complexdouble_test();
+     eigen_cpu_test();
+     LUconstruct_cpu_test();
+     inverse_cpu_test();
+     solve_lineq_cpu_test();
+     QRMatrix_cpu_test();
  }
 
 } //end namespace matrix_hao_lib

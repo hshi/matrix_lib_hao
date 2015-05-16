@@ -3,7 +3,8 @@
 namespace matrix_hao_lib
 {
  void matrix_class_test();
- void matrix_2d_blas_lapack_test();
+ void matrix_2d_common_fun_test();
+ void matrix_2d_bl_cpu_test();
 }
 
 using namespace std;
@@ -21,8 +22,9 @@ int main(int argc, char** argv)
     if(rank==0)
     {
         cout<<"\n\n\n=======Testing======="<<endl;
-        matrix_class_test(); 
-        matrix_2d_blas_lapack_test();
+        matrix_class_test();
+        matrix_2d_common_fun_test(); 
+        matrix_2d_bl_cpu_test();
     }
 
 #ifdef MPI_HAO

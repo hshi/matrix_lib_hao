@@ -7,6 +7,7 @@
 #include <vector>
 #include <typeinfo>
 #include <stdexcept>
+#include <stdlib.h>
 
 
 namespace matrix_hao_lib

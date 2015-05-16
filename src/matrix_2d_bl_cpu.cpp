@@ -86,19 +86,20 @@ namespace matrix_hao_lib
  {
      if(A.L1!=A.L2) {cout<<"Input for eigen is not square matrix!\n"; exit(1);}
      BL_INT N=A.L1; BL_INT info; 
-     BL_INT lwork=-1; complex<double> work_test[1];
-     BL_INT lrwork=(1<(3*N-2))?(3*N-2):1; double* rwork= new double[lrwork];
+     complex<double> work_test[1]; double rwork_test[1]; int iwork_test[1]; 
+     BL_INT lwork=-1; BL_INT lrwork=-1; BL_INT liwork=-1;
 
-     FORTRAN_NAME(zheev)(&JOBZ,&UPLO,&N,(BL_COMPLEX16* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
-                         (BL_COMPLEX16* )work_test,&lwork,(BL_DOUBLE* )rwork,&info);
+     FORTRAN_NAME(zheevd)(&JOBZ,&UPLO,&N,(BL_COMPLEX16* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
+      (BL_COMPLEX16* )work_test, &lwork, (BL_DOUBLE* )rwork_test, &lrwork, (BL_INT* )iwork_test, &liwork ,&info);
 
-     //lwork=static_cast<BL_INT>(lround(work_test[0].real()));
-     lwork=lround(work_test[0].real());
-     complex<double>* work= new complex<double>[lwork];
-     FORTRAN_NAME(zheev)(&JOBZ,&UPLO,&N,(BL_COMPLEX16* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
-                         (BL_COMPLEX16* )work,&lwork,(BL_DOUBLE* )rwork,&info);
-     delete[] rwork;
-     delete[] work;
+     lwork=lround(work_test[0].real()); lrwork=lround(rwork_test[0]); liwork=iwork_test[0];
+     complex<double>* work= new complex<double>[lwork]; double* rwork=new double[lrwork]; int* iwork=new int[liwork];
+     FORTRAN_NAME(zheevd)(&JOBZ,&UPLO,&N,(BL_COMPLEX16* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
+      (BL_COMPLEX16* )work, &lwork, (BL_DOUBLE* )rwork, &lrwork, (BL_INT* )iwork, &liwork ,&info);
+
+     delete[] work; delete[] rwork; delete[] iwork;
+
+     if(info!=0) {cout<<"zheevd failed: info= "<< info<<"\n"; exit(1);}
  }
 
 

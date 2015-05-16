@@ -105,7 +105,9 @@ namespace matrix_hao_lib
      else cout<<"WARNING!!!!!!!!! Eigen_cpu failed Hermintion test! \n";
      //cout<<setprecision(16);
      //cout<<w<<endl;
+     //cout<<w_exact<<endl;
      //cout<<a<<endl;
+     //cout<<a_exact<<endl;
  }
 
  void LUconstruct_cpu_test()

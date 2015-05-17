@@ -23,9 +23,10 @@ namespace matrix_hao_lib
           char TRANSA='N', char TRANSB='N', std::complex<double> alpha=1, std::complex<double> beta=0);
 
 
- /*************************************/
- /*Diagonalize Hermitian Matrix********/
- /*************************************/
+ /*****************************************************/
+ /*Diagonalize Real symmetric/ Hermitian Matrix********/
+ /*****************************************************/
+ void eigen_cpu(Matrix<double,2>& A, Matrix<double,1>& W, char JOBZ='V', char UPLO='U');
  void eigen_cpu(Matrix<std::complex<double>,2>& A, Matrix<double,1>& W, char JOBZ='V', char UPLO='U');
 
 

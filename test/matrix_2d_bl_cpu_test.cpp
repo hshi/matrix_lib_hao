@@ -69,9 +69,41 @@ namespace matrix_hao_lib
      if(flag==0) cout<<"Gmm_cpu passed complex double test! \n";
      else cout<<"WARNING!!!!!!!!! Gmm_cpu failed complex double test! \n";
  }
- 
 
- void eigen_cpu_test()
+
+ void eigen_cpu_double_test()
+ {
+     Matrix<double,2> a={3,3,{ 1.0,   3.0,   2.123,
+                               3.0,   2.0,   5.123,
+                               2.123, 5.123, 3     } };
+     Matrix<double,1> w(3);
+     eigen_cpu(a,w);
+
+     Matrix<double,2> a_exact={3,3,{0.2849206371113407, -0.7715217080565622,    0.5688360788008725,
+                                    0.8701970661567061, -0.040665575250991126, -0.4910227866828251,
+                                   -0.40196678544418185,-0.6349020121144606,   -0.6597894652180195} };
+     Matrix<double,1> w_exact={3,{-2.8850331801092803, -0.33813149591901365, 9.223164676028293}};
+
+     size_t flag=0;
+     for(size_t i=0; i<a.L1; i++)
+     {
+         for(size_t j=0; j<a.L2; j++)
+             {
+                 //Use both abs to avoid unexpected sign in each column
+                 if(abs(abs(a(i,j))-abs(a_exact(i,j)))>1e-13) flag++;
+             }
+     }
+     flag+=diff(w,w_exact,1e-13);
+     if(flag==0) cout<<"Eigen_cpu passed Real symmetric test! \n";
+     else cout<<"WARNING!!!!!!!!! Eigen_cpu failed symmetric test! \n";
+     //cout<<setprecision(16);
+     //cout<<w<<endl;
+     //cout<<w_exact<<endl;
+     //cout<<a<<endl;
+     //cout<<a_exact<<endl;
+ } 
+
+ void eigen_cpu_complexdouble_test()
  {
      Matrix<complex<double>,2> a={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
                                         {3.0,-4.0},   {2.0,0.0},    {5.123,3.11},
@@ -201,7 +233,8 @@ namespace matrix_hao_lib
      gmm_cpu_double_test();
      gmm_cpu_complexfloat_test();
      gmm_cpu_complexdouble_test();
-     eigen_cpu_test();
+     eigen_cpu_double_test();
+     eigen_cpu_complexdouble_test();
      LUconstruct_cpu_test();
      inverse_cpu_test();
      solve_lineq_cpu_test();

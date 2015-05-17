@@ -78,6 +78,30 @@ namespace matrix_hao_lib
  }
 
 
+ /******************************************/
+ /*Diagonalize Real symmetric Matrix********/
+ /******************************************/
+ void eigen_cpu(Matrix<double,2>& A, Matrix<double,1>& W, char JOBZ, char UPLO)
+ {
+     if(A.L1!=A.L2) {cout<<"Input for eigen is not square matrix!\n"; exit(1);}
+     BL_INT N=A.L1; BL_INT info;
+     double work_test[1]; int iwork_test[1];
+     BL_INT lwork=-1; BL_INT liwork=-1;
+
+     FORTRAN_NAME(dsyevd)(&JOBZ,&UPLO,&N,(BL_DOUBLE* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
+                          (BL_DOUBLE* )work_test, &lwork, (BL_INT* )iwork_test, &liwork ,&info);
+
+     lwork=lround(work_test[0]); liwork=iwork_test[0];
+     double* work= new double[lwork]; int* iwork=new int[liwork];
+     FORTRAN_NAME(dsyevd)(&JOBZ,&UPLO,&N,(BL_DOUBLE* )A.base_array,&N,(BL_DOUBLE* )W.base_array,
+                          (BL_DOUBLE* )work, &lwork, (BL_INT* )iwork, &liwork ,&info);
+
+     delete[] work; delete[] iwork;
+
+     if(info!=0) {cout<<"Dsyevd failed: info= "<< info<<"\n"; exit(1);}
+ }
+
+
 
  /*************************************/
  /*Diagonalize Hermitian Matrix********/
@@ -99,7 +123,7 @@ namespace matrix_hao_lib
 
      delete[] work; delete[] rwork; delete[] iwork;
 
-     if(info!=0) {cout<<"zheevd failed: info= "<< info<<"\n"; exit(1);}
+     if(info!=0) {cout<<"Zheevd failed: info= "<< info<<"\n"; exit(1);}
  }
 
 

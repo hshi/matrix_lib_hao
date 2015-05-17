@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(matrixhao)
 
@@ -27,6 +27,17 @@ if(MKL_FOUND)
   set(lapackblas_libraries "${mkl_libraries}")
 endif()
 
+if(USE_MAGMA)
+  add_definitions(-DUSE_MAGMA)
+  # Use standard FindCUD
+  find_package(CUDA)
+  include_directories(${CUDA_INCLUDE_DIRS})
+  find_package(magma)
+  include_directories(${magma_include_dirs})
+  set(magma_libraries "${magma_libraries}")
+else()
+  MESSAGE("-- MAGMA support was disabled.")
+endif()
 
 include_directories(inc)
 

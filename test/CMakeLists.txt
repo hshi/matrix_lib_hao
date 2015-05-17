@@ -4,6 +4,8 @@ add_executable(matrixtest ${matrix_test_srcs})
 
 target_link_libraries(matrixtest matrixhao)
 
+target_link_libraries(matrixtest ${magma_libraries})
+
 target_link_libraries(matrixtest ${lapackblas_libraries})
 
 install(TARGETS matrixtest DESTINATION test)

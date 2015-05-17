@@ -1,7 +1,6 @@
 #ifndef MATRIX_2D_COMMON_FUN
 #define MATRIX_2D_COMMON_FUN
 
-#include "matrix_define.h"
 
 namespace matrix_hao_lib
 {

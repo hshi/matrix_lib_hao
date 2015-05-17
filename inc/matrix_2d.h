@@ -32,14 +32,20 @@ namespace matrix_hao_lib
      /***************************/
      /*PART III: MEMBER FUNCTION*/
      /***************************/
-     void range_check(size_t i,size_t j) const  {if((i>=L1)||(j>=L2) ) throw std::invalid_argument("exceed the range of 2D array");}
-     void lenth_check() const {if((L1*L2)!=this->L) throw std::invalid_argument("size not consistent in 2D array");}
+     void range_check(size_t i,size_t j) const 
+     {
+        if( (i>=L1)||(j>=L2) ) {std::cout<<"exceed the range of 2D array"<<std::endl; exit(1);}
+     }
+     void lenth_check() const 
+     {
+        if((L1*L2)!=this->L) {std::cout<<"size not consistent in 2D array"<<std::endl; exit(1);}
+     }
      // subscripting, the matrix is column arranged:
      T operator ()(size_t i,size_t j) const  {/*range_check(i,j);*/ return this->base_array[i+j*L1];}
      T& operator()(size_t i,size_t j)        {/*range_check(i,j);*/ return this->base_array[i+j*L1];}
      Matrix<T,1> operator[](size_t i)
      {
-         if(i>=L2) throw std::invalid_argument("i exceed the column range of 2D array");
+         if(i>=L2) {std::cout<<"i exceed the column range of 2D array"<<std::endl; exit(1);}
          Matrix<T,1> A; A.L_f()=L1; A.owns=false; A.L1=L1;
          A.base_array=this->base_array; A.base_array+=(L1*i);
          return A; 

@@ -32,8 +32,14 @@ namespace matrix_hao_lib
      /***************************/
      /*PART III: MEMBER FUNCTION*/
      /***************************/
-     void range_check(size_t i) const  {if (i>=L1) throw std::invalid_argument("exceed the range of 1D array");}
-     void lenth_check() const {if(L1!=this->L) throw std::invalid_argument("size not consistent in 1D array");}
+     void range_check(size_t i) const  
+     {
+        if (i>=L1)  {std::cout<<"exceed the range of 1D array"<<std::endl; exit(1);} 
+     }
+     void lenth_check()  const 
+     {
+        if(L1!=this->L) {std::cout<<"size not consistent in 1D array"<<std::endl; exit(1);} 
+     }
      // subscripting:
      T operator ()(size_t i) const  {/*range_check(i);*/ return this->base_array[i];}
      T& operator()(size_t i)        {/*range_check(i);*/ return this->base_array[i];}

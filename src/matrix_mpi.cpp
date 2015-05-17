@@ -1,10 +1,8 @@
 #ifdef MPI_HAO
 #include <cmath>
 #include "matrix_all.h"
-using std::complex;
-using std::conj;
-using std::cout;
-using std::endl;
+
+using namespace std;
 
 namespace matrix_hao_lib
 {

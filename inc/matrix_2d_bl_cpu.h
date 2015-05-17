@@ -1,7 +1,6 @@
 #ifndef MATRIX_HAO_BL_CPU
 #define MATRIX_HAO_BL_CPU
 
-#include "matrix_define.h"
 
 namespace matrix_hao_lib
 {

@@ -124,21 +124,21 @@ namespace matrix_hao_lib
      //add_equal array SELF=SELF+B
      inline void add_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("add equal do not have the same L in Matrix_base::add_equal!");}
+         if(L!=B.L_f()) {std::cout<<"add equal do not have the same L in Matrix_base::add_equal!"<<std::endl; exit(1);} 
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i] += B.base_array[i];}
      }
  
      //min_equal array SELF=SELF-B
      inline void min_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("min equal do not have the same L in Matrix_base::min_equal!");}
+         if(L!=B.L_f()) {std::cout<<"min equal do not have the same L in Matrix_base::min_equal!"<<std::endl; exit(1);}
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i] -= B.base_array[i];}
      }
  
      //min_add_equal array: SELF=-SELF+B
      inline void min_add_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("min_add equal do not have the same L in Matrix_base::min_add_equal!");}
+         if(L!=B.L_f()) {std::cout<<"min_add equal do not have the same L in Matrix_base::min_add_equal!"<<std::endl; exit(1);}
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i]=B.base_array[i]-base_array[i];}
      }
  
@@ -146,21 +146,21 @@ namespace matrix_hao_lib
      //tim_equal array SELF=SELF*B
      inline void tim_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("tim equal do not have the same L in Matrix_base::tim_equal!");}
+         if(L!=B.L_f()) {std::cout<<"tim equal do not have the same L in Matrix_base::tim_equal!"<<std::endl; exit(1);}
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i] *= B.base_array[i];}
      }
  
      //div_equal array SELF=SELF/B
      inline void div_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("div equal do not have the same L in Matrix_base::div_equal!");}
+         if(L!=B.L_f()) {std::cout<<"div equal do not have the same L in Matrix_base::div_equal!"<<std::endl; exit(1);}
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i] /= B.base_array[i];}
      }
  
      //inv_div_equal array SELF=(1/SELF)*B
      inline void inv_div_equal(const Matrix_base<T> & B)
      {
-         if(L!=B.L_f()) {throw std::invalid_argument("inv div equal do not have the same L in Matrix_base::inv_div_equal!");}
+         if(L!=B.L_f()) {std::cout<<"inv div equal do not have the same L in Matrix_base::inv_div_equal!"<<std::endl; exit(1);}
          for(size_t i=0; i<B.L_f(); ++i){ base_array[i] = B.base_array[i]/base_array[i];}
      } 
  

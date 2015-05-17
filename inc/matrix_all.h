@@ -1,6 +1,7 @@
 #ifndef MATRIX_HAO_CLASS_ALL
 #define MATRIX_HAO_CLASS_ALL
 
+#include "matrix_define.h"
 #include "matrix_base.h"
 #include "matrix_1d.h"
 #include "matrix_2d.h"

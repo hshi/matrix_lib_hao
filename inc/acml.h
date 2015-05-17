@@ -2834,7 +2834,7 @@ extern void dsycon_(char *uplo, int *n, double *a, int *lda, int *ipiv, double *
 extern void dsyconv_(char *uplo, char *way, int *n, double *a, int *lda, int *ipiv, double *work, int *info, int uplo_len, int way_len);
 extern void dsyequb_(char *uplo, int *n, double *a, int *lda, double *s, double *scond, double *amax, double *work, int *info, int uplo_len);
 extern void dsyev_(char *jobz, char *uplo, int *n, double *a, int *lda, double *w, double *work, int *lwork, int *info, int jobz_len, int uplo_len);
-extern void dsyevd_(char *jobz, char *uplo, int *n, double *a, int *lda, double *w, double *work, int *lwork, int *iwork, int *liwork, int *info, int jobz_len, int uplo_len);
+extern void dsyevd_(char *jobz, char *uplo, int *n, double *a, int *lda, double *w, double *work, int *lwork, int *iwork, int *liwork, int *info, int jobz_len=1, int uplo_len=1);
 extern void dsyevr_(char *jobz, char *range, char *uplo, int *n, double *a, int *lda, double *vl, double *vu, int *il, int *iu, double *abstol, int *m, double *w, double *z, int *ldz, int *isuppz, double *work, int *lwork, int *iwork, int *liwork, int *info, int jobz_len, int range_len, int uplo_len);
 extern void dsyevx_(char *jobz, char *range, char *uplo, int *n, double *a, int *lda, double *vl, double *vu, int *il, int *iu, double *abstol, int *m, double *w, double *z, int *ldz, double *work, int *lwork, int *iwork, int *ifail, int *info, int jobz_len, int range_len, int uplo_len);
 extern void dsygst_(int *itype, char *uplo, int *n, double *a, int *lda, double *b, int *ldb, int *info, int uplo_len);
@@ -3255,7 +3255,7 @@ extern void zhbtrd_(char *vect, char *uplo, int *n, int *kd, doubleccomplex *ab,
 extern void zhecon_(char *uplo, int *n, doubleccomplex *a, int *lda, int *ipiv, double *anorm, double *rcond, doubleccomplex *work, int *info, int uplo_len);
 extern void zheequb_(char *uplo, int *n, doubleccomplex *a, int *lda, double *s, double *scond, double *amax, doubleccomplex *work, int *info, int uplo_len);
 extern void zheev_(char *jobz, char *uplo, int *n, doubleccomplex *a, int *lda, double *w, doubleccomplex *work, int *lwork, double *rwork, int *info, int jobz_len=1, int uplo_len=1);
-extern void zheevd_(char *jobz, char *uplo, int *n, doubleccomplex *a, int *lda, double *w, doubleccomplex *work, int *lwork, double *rwork, int *lrwork, int *iwork, int *liwork, int *info, int jobz_len, int uplo_len);
+extern void zheevd_(char *jobz, char *uplo, int *n, doubleccomplex *a, int *lda, double *w, doubleccomplex *work, int *lwork, double *rwork, int *lrwork, int *iwork, int *liwork, int *info, int jobz_len=1, int uplo_len=1);
 extern void zheevr_(char *jobz, char *range, char *uplo, int *n, doubleccomplex *a, int *lda, double *vl, double *vu, int *il, int *iu, double *abstol, int *m, double *w, doubleccomplex *z, int *ldz, int *isuppz, doubleccomplex *work, int *lwork, double *rwork, int *lrwork, int *iwork, int *liwork, int *info, int jobz_len, int range_len, int uplo_len);
 extern void zheevx_(char *jobz, char *range, char *uplo, int *n, doubleccomplex *a, int *lda, double *vl, double *vu, int *il, int *iu, double *abstol, int *m, double *w, doubleccomplex *z, int *ldz, doubleccomplex *work, int *lwork, double *rwork, int *iwork, int *ifail, int *info, int jobz_len, int range_len, int uplo_len);
 extern void zhegst_(int *itype, char *uplo, int *n, doubleccomplex *a, int *lda, doubleccomplex *b, int *ldb, int *info, int uplo_len);

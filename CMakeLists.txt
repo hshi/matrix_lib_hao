@@ -32,7 +32,7 @@ if(USE_MAGMA)
   # Use standard FindCUD
   find_package(CUDA)
   include_directories(${CUDA_INCLUDE_DIRS})
-  find_package(magma)
+  find_package(magma REQUIRED)
   include_directories(${magma_include_dirs})
   set(magma_libraries "${magma_libraries}")
 else()

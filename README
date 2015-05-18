@@ -2,4 +2,19 @@ matrix_lib_hao
 ==============
 
 The c++ matrix library, it supports many dimension array and uses lapack blas libaray.
-We can use both mkl and acml, with a customed acml.h (not 64, not mp version) header file.
+We can use both mkl, acml, and magma (CPU+GPU). There is a customed acml.h (not 64, not mp version) header file for using acml.
+
+NOTE: To enable MAGMA support, specify `-DUSE_MAGMA=on' option when running cmake.
+
+Acknowledgment:
+Yudistira Virgus (https://github.com/yvirgus ) and Wirawan Purwanto(https://github.com/wirawan0) contributed to the Magma part.
+Only the function part of Magma is imported to current library. They even use the polymorphism class to switch between Magma 
+and normal lapack/blas, which can be found from Yudistira's github. 
+
+The reason I only adopt the function part:
+1. It is more readable and understandable.
+2. GPU is still on its way, we might need to update the code more, it is easy to update the function.
+3. We have CPU and GPU, there is no 'TPU' or 'VPU', I do not see a big advantage of polymorphism class here.
+However, anyone who is interested in the polymorphism class, and want to use it,
+please check https://github.com/yvirgus/matrix_lib_hao for more details.
+

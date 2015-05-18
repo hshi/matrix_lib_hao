@@ -175,9 +175,8 @@ namespace matrix_hao_lib
      else cout<<"WARNING!!!!!!!!! Inverse_magma failed complex double test! \n";
  }
 
-/*
 
- void solve_lineq_cpu_test()
+ void solve_lineq_magma_test()
  {
      Matrix<complex<double>,2> A={3,3,{ {1.0,0.0} ,   {3.0,4.0},    {2.123,3.11},
                                         {3.0,-2.0},   {2.0,0.0},    {5.123,3.11},
@@ -190,19 +189,21 @@ namespace matrix_hao_lib
                                               {0.6345942167676883, 1.253141477086266},   
                                               {0.825768240961444,-0.8208234397212029},   
                                               {0.6299516251873555,0.037643960766659545},} };
-     Matrix<complex<double>,2> X=solve_lineq_cpu( LUconstruct_cpu(A),B );
+     Matrix<complex<double>,2> X=solve_lineq_magma( LUconstruct_magma(A),B );
 
      size_t flag=diff(X,X_exact,1e-13);
-     if(flag==0) cout<<"Solve_lineq_cpu passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Solve_lineq_cpu failed complex double test! \n";
+     if(flag==0) cout<<"Solve_lineq_magma passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Solve_lineq_magma failed complex double test! \n";
 
  } 
 
- void QRMatrix_cpu_test()
+
+
+ void QRMatrix_magma_test()
  {
      Matrix<complex<double>,2> A={3,2,{ {2.0,0.0} ,   {3.0,5.0},    {3.123,3.11},
                                         {3.0,-6.0},   {2.0,1.0},    {6.123,3.11},} };
-     double det=QRMatrix_cpu(A);
+     double det=QRMatrix_magma(A);
      Matrix<complex<double>,2> A_exact={3,2,{ {-0.26392384387316437, 0} ,   
                                               {-0.3958857658097466 , 0.6598096096829109},    
                                               {-0.41211708220794624, 0.41040157722277065},
@@ -216,14 +217,13 @@ namespace matrix_hao_lib
          for(size_t j=0; j<A_exact.L2; j++) {if(abs(abs(A(i,j))-abs(A_exact(i,j)))>1e-12) flag++;} //Use abs for unexpected sign
      }
      if(abs(det-det_exact)>1e-12) flag++;
-     if(flag==0) cout<<"QRMatrix_cpu passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! QRMatrix_cpu failed complex double test! \n";
+     if(flag==0) cout<<"QRMatrix_magma passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! QRMatrix_magma failed complex double test! \n";
      //cout<<setprecision(16);
      //cout<<A<<endl;
      //cout<<det<<endl;
  }
 
-*/
  void matrix_2d_bl_magma_test()
  {
      gmm_magma_float_test();
@@ -234,10 +234,8 @@ namespace matrix_hao_lib
      eigen_magma_complexdouble_test();
      LUconstruct_magma_test();
      inverse_magma_test();
-/*
-     solve_lineq_cpu_test();
-     QRMatrix_cpu_test();
-*/
+     solve_lineq_magma_test();
+     QRMatrix_magma_test();
  }
 
 } //end namespace matrix_hao_lib

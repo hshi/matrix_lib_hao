@@ -157,6 +157,7 @@ namespace matrix_hao_lib
      lwork=lround(work_test[0].real());
      complex<double>* work= new complex<double>[lwork];
      FORTRAN_NAME(zgetri)(&N,(BL_COMPLEX16* )A.base_array,&N,x.ipiv.base_array,(BL_COMPLEX16* )work,&lwork,&info);
+     if(info<0) {cout<<"The "<<info<<"-th parameter is illegal!\n"; exit(1);}
      delete[] work; 
 
      return A;
@@ -199,6 +200,7 @@ namespace matrix_hao_lib
      complex<double> det={1.0,0.0}; for (size_t i=0; i<ph.L2; i++)  det*=ph(i,i); 
 
      FORTRAN_NAME(zungqr) (&L,&N,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
+     if(info!=0) {cout<<"Zungqr run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
      if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
 

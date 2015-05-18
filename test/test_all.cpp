@@ -5,6 +5,9 @@ namespace matrix_hao_lib
  void matrix_class_test();
  void matrix_2d_common_fun_test();
  void matrix_2d_bl_cpu_test();
+#ifdef USE_MAGMA
+ void matrix_2d_bl_magma_test();
+#endif
 }
 
 using namespace std;
@@ -25,6 +28,11 @@ int main(int argc, char** argv)
         matrix_class_test();
         matrix_2d_common_fun_test(); 
         matrix_2d_bl_cpu_test();
+#ifdef USE_MAGMA
+        magma_init();
+        matrix_2d_bl_magma_test();
+        magma_finalize();
+#endif
     }
 
 #ifdef MPI_HAO

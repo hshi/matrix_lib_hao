@@ -9,5 +9,6 @@
 #include "matrix_element_wise.h"
 #include "matrix_2d_common_fun.h"
 #include "matrix_2d_bl_cpu.h"
+#include "matrix_2d_bl_magma.h"
 #include "matrix_mpi.h"
 #endif

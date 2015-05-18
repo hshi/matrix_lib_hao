@@ -41,8 +41,14 @@ namespace matrix_hao_lib
                                         {2.123,-5.11},{5.123,-6.11},{3,0.0} } };
      complex<double> det=determinant( LUconstruct_cpu(X) );
      complex<double> det_exact={123.11968700000003,3.3324580000000115};
-     if(abs(det-det_exact)<1e-12) cout<<"Determinant passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Determinant failed complex double test! \n";
+     if(abs(det-det_exact)<1e-12) cout<<"Determinant passed complex double test in cpu! \n";
+     else cout<<"WARNING!!!!!!!!! Determinant failed complex double test in cpu! \n";
+#ifdef USE_MAGMA
+     det=determinant( LUconstruct_magma(X) );
+     if(abs(det-det_exact)<1e-12) cout<<"Determinant passed complex double test in magma! \n";
+     else cout<<"WARNING!!!!!!!!! Determinant failed complex double test in magma! \n";
+
+#endif
      //cout<<setprecision(16);
      //cout<<det<<"\n";
  }
@@ -55,8 +61,13 @@ namespace matrix_hao_lib
      X*=1.e103;
      complex<double> logdet=log_determinant( LUconstruct_cpu(X) );
      complex<double> logdet_exact={716.3123168546207,0.027060209772387683};
-     if(abs(logdet-logdet_exact)<1e-12) cout<<"Log_determinant passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Log_determinant failed complex double test! \n";
+     if(abs(logdet-logdet_exact)<1e-12) cout<<"Log_determinant passed complex double test in cpu! \n";
+     else cout<<"WARNING!!!!!!!!! Log_determinant failed complex double test in cpu! \n";
+#ifdef USE_MAGMA
+     logdet=log_determinant( LUconstruct_magma(X) );
+     if(abs(logdet-logdet_exact)<1e-12) cout<<"Log_determinant passed complex double test in magma! \n";
+     else cout<<"WARNING!!!!!!!!! Log_determinant failed complex double test in magma! \n";
+#endif
      //cout<<abs(logdet-logdet_exact)<<"\n";
      //cout<<setprecision(16);
      //cout<<logdet<<"\n";

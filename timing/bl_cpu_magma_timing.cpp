@@ -4,8 +4,12 @@
 #include "random_fill_matrix.h"
 
 using namespace std;
+
+
 namespace matrix_hao_lib
 {
+   int i_max=3136;
+
    void gmm_float_timing(int M, int N, int K)
    {
        real_Double_t cpu_time, magma_time;
@@ -30,7 +34,7 @@ namespace matrix_hao_lib
        cout<<"Timing gmm float:"<<endl;
        cout<<setw(16)<<"M"<<setw(16)<<"N"<<setw(16)<<"K"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 8; i <= 1087; i *= 2)       gmm_float_timing(i, i, i);
-       for (int i = 1088; i <= 5184; i += 1024) gmm_float_timing(i, i, i);
+       for (int i = 1088; i <= i_max; i += 1024) gmm_float_timing(i, i, i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -59,7 +63,7 @@ namespace matrix_hao_lib
        cout<<"Timing gmm double:"<<endl;
        cout<<setw(16)<<"M"<<setw(16)<<"N"<<setw(16)<<"K"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 8; i <= 1087; i *= 2)       gmm_double_timing(i, i, i);
-       for (int i = 1088; i <= 5184; i += 1024) gmm_double_timing(i, i, i);
+       for (int i = 1088; i <= i_max; i += 1024) gmm_double_timing(i, i, i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -89,7 +93,7 @@ namespace matrix_hao_lib
        cout<<"Timing gmm complexfloat:"<<endl;
        cout<<setw(16)<<"M"<<setw(16)<<"N"<<setw(16)<<"K"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 8; i <= 1087; i *= 2)       gmm_complexfloat_timing(i, i, i);
-       for (int i = 1088; i <= 5184; i += 1024) gmm_complexfloat_timing(i, i, i);
+       for (int i = 1088; i <= i_max; i += 1024) gmm_complexfloat_timing(i, i, i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -119,7 +123,7 @@ namespace matrix_hao_lib
        cout<<"Timing gmm complexdouble:"<<endl;
        cout<<setw(16)<<"M"<<setw(16)<<"N"<<setw(16)<<"K"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 8; i <= 1087; i *= 2)       gmm_complexdouble_timing(i, i, i);
-       for (int i = 1088; i <= 5184; i += 1024) gmm_complexdouble_timing(i, i, i);
+       for (int i = 1088; i <= i_max; i += 1024) gmm_complexdouble_timing(i, i, i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -152,7 +156,7 @@ namespace matrix_hao_lib
        cout<<"Timing eigen double:"<<endl;
        cout<<setw(16)<<"N"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 210; i <= 1000; i += 200)     eigen_double_timing(i);
-       for (int i = 1088; i <= 7232; i += 1024)   eigen_double_timing(i);
+       for (int i = 1088; i <= i_max; i += 1024)   eigen_double_timing(i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -191,7 +195,7 @@ namespace matrix_hao_lib
        cout<<"Timing eigen complex double:"<<endl;
        cout<<setw(16)<<"N"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 210; i <= 1000; i += 200)     eigen_complexdouble_timing(i);
-       for (int i = 1088; i <= 7232; i += 1024)   eigen_complexdouble_timing(i);
+       for (int i = 1088; i <= i_max; i += 1024)   eigen_complexdouble_timing(i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -217,7 +221,7 @@ namespace matrix_hao_lib
        cout<<"Timing LUconstruct complex double:"<<endl;
        cout<<setw(16)<<"N"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 16; i <= 1087; i += 128)     LUconstruct_timing(i);
-       for (int i = 1088; i <= 7232; i += 1024)  LUconstruct_timing(i);
+       for (int i = 1088; i <= i_max; i += 1024)  LUconstruct_timing(i);
        cout<<"\n\n\n"<<endl;
    }
 
@@ -248,22 +252,101 @@ namespace matrix_hao_lib
        cout<<"Timing inverse complex double:"<<endl;
        cout<<setw(16)<<"N"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
        for (int i = 16; i <= 1087; i += 128)     inverse_timing(i);
-       for (int i = 1088; i <= 7232; i += 1024)  inverse_timing(i);
+       for (int i = 1088; i <= i_max; i += 1024)  inverse_timing(i);
        cout<<"\n\n\n"<<endl;
    }
 
 
+   void solve_lineq_timing(int N, int M)
+   {
+       real_Double_t cpu_time, magma_time;
+       Matrix<complex<double>,2> X(N,N); fill_random(X);
+       LUDecomp<complex<double>> LU_cpu=LUconstruct_cpu(X);
+       LUDecomp<complex<double>> LU_magma=LUconstruct_magma(X);
+       Matrix<complex<double>,2> B(N,M); fill_random(B);
+       Matrix<complex<double>,2> A_cpu(N,M), A_magma(N,M);
+
+       cpu_time = magma_wtime();
+       A_cpu=solve_lineq_cpu( LU_cpu , B);
+       cpu_time = magma_wtime() - cpu_time;
+
+       magma_time = magma_wtime();
+       A_magma=solve_lineq_magma( LU_magma , B);
+       magma_time = magma_wtime() - magma_time;
+
+       size_t flag=diff(A_cpu, A_magma,1e-10);
+       cout<<setw(16)<<N<<setw(16)<<M<<setw(16)<<cpu_time<<setw(16)<<magma_time<<setw(16)<<flag<<endl;
+   }
+
+
+   void solve_lineq_timing_loop()
+   {
+       cout<<"Timing solve_lineq complex double:"<<endl;
+       cout<<setw(16)<<"N"<<setw(16)<<"M"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
+       for (int i = 8; i <= 1087; i *= 2)        solve_lineq_timing(i,i);
+       for (int i = 1088; i <= i_max; i += 1024)  solve_lineq_timing(i,i);
+       cout<<"\n\n\n"<<endl;
+   }
+
+
+   void QRMatrix_timing(int N, int M)
+   {
+       real_Double_t cpu_time, magma_time;
+       double det_cpu,det_magma;
+       Matrix<complex<double>,2> ph_cpu(N,M), ph_magma(N,M);
+       fill_random(ph_cpu); ph_magma=ph_cpu;
+
+       cpu_time = magma_wtime();
+       det_cpu=QRMatrix_cpu(ph_cpu);
+       cpu_time = magma_wtime() - cpu_time;
+
+       magma_time = magma_wtime();
+       det_magma=QRMatrix_magma(ph_magma);
+       magma_time = magma_wtime() - magma_time;
+
+       size_t flag=0; 
+       for(int i=0; i<N; i++)
+       {
+           for(int j=0; j<M; j++) {if(abs(abs(ph_cpu(i,j))-abs(ph_magma(i,j)))>1e-12) flag++;}
+       }
+
+       //In large system, the cpu part will have infinite, magma will have finite value:
+       //It might be a bug from magma, here we are using magma_zgeqrf_gpu and magma_zungqr_gpu
+       //If we use magma_zgeqrf and magma_zungqr2, it will be the same with cpu.
+       //Example about output:
+       //N=128 M=128 det_cpu=9.0991e+229 det_magma=1.14202e+14
+       //N=256 M=256 det_cpu=inf det_magma=1.07379e+14
+       //if(abs((det_cpu-det_magma)/det_magma)>1e-10) flag++;
+       //cout<<det_cpu<<endl;
+       //cout<<det_magma<<endl; 
+       cout<<setw(16)<<N<<setw(16)<<M<<setw(16)<<cpu_time<<setw(16)<<magma_time<<setw(16)<<flag<<endl;
+   }
+
+   void QRMatrix_timing_loop()
+   {
+       cout<<"Timing QRMatrix complex double:"<<endl;
+       cout<<setw(16)<<"N"<<setw(16)<<"M"<<setw(16)<<"cpu_time"<<setw(16)<<"magma_time"<<setw(16)<<"flag"<<endl;
+       for (int i = 8; i <= 1087; i *= 2)        QRMatrix_timing(i,i);
+       for (int i = 1088; i <= i_max; i += 1024)  QRMatrix_timing(i,i);
+       cout<<"\n\n\n"<<endl;
+   }
+
+
+
    void bl_cpu_magma_timing()
    {
-      //gmm_float_timing_loop();
-      //gmm_double_timing_loop();
-      //gmm_complexfloat_timing_loop();
-      //gmm_complexdouble_timing_loop();
-      //eigen_double_timing_loop();
-      //eigen_complexdouble_timing_loop();
-      //LUconstruct_timing_loop();
+      gmm_float_timing_loop();
+      gmm_double_timing_loop();
+      gmm_complexfloat_timing_loop();
+      gmm_complexdouble_timing_loop();
+      eigen_double_timing_loop();
+      eigen_complexdouble_timing_loop();
+      LUconstruct_timing_loop();
       inverse_timing_loop();
+      solve_lineq_timing_loop();
+      QRMatrix_timing_loop();
    }
+
 
 }  //end namespace matrix_hao_lib
 

@@ -22,7 +22,7 @@ int main(int argc, char** argv)
     if(rank==0)
     {
         cout<<"\n\nThis timing program require large memory and long computational time!"<<endl;
-        cout<<"Please submit the job if you are using a cluster, it takes ~??? hours."<<endl;
+        cout<<"Please submit the job if you are using a cluster, it takes ~10 minutes."<<endl;
         cout<<"\n=======Start timing======="<<endl;
         
     }

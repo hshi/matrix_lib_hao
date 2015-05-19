@@ -21,7 +21,8 @@ int main(int argc, char** argv)
 
     if(rank==0)
     {
-        cout<<"\n\nThis timing program require large memory and long computational time!"<<endl;
+        cout<<"\n\nThis timing program compares the time cost between CPU lapack and MAGMA lapack."<<endl;
+        cout<<"It requires large memory and long computational time if USE_MAGMA=on, else does nothing."<<endl;
         cout<<"Please submit the job if you are using a cluster, it takes ~10 minutes."<<endl;
         cout<<"\n=======Start timing======="<<endl;
         

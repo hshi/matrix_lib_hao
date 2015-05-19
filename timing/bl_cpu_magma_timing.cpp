@@ -309,6 +309,7 @@ namespace matrix_hao_lib
        {
            for(int j=0; j<M; j++) {if(abs(abs(ph_cpu(i,j))-abs(ph_magma(i,j)))>1e-12) flag++;}
        }
+       if(abs((det_cpu-det_magma)/det_magma)>1e-10) {/*flag++;*/}
 
        //In large system, the cpu part will have infinite, magma will have finite value:
        //It might be a bug from magma, here we are using magma_zgeqrf_gpu and magma_zungqr_gpu

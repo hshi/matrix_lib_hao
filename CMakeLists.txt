@@ -30,7 +30,7 @@ endif()
 if(USE_MAGMA)
   add_definitions(-DUSE_MAGMA)
   # Use standard FindCUD
-  find_package(CUDA)
+  find_package(CUDA REQUIRED)
   include_directories(${CUDA_INCLUDE_DIRS})
   find_package(magma REQUIRED)
   include_directories(${magma_include_dirs})

@@ -21,7 +21,10 @@ int main(int argc, char** argv)
 
     if(rank==0)
     {
-        cout<<"\n\n\n=======Timing======="<<endl;
+        cout<<"\n\nThis timing program require large memory and long computational time!"<<endl;
+        cout<<"Please submit the job if you are using a cluster, it takes ~??? hours."<<endl;
+        cout<<"\n=======Start timing======="<<endl;
+        
     }
 
 #ifdef USE_MAGMA

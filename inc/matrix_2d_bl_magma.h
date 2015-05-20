@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_BL_MAGMA
-#define MATRIX_HAO_BL_MAGMA
+#ifndef MATRIX_HAO_BL_MAGMA_H
+#define MATRIX_HAO_BL_MAGMA_H
 
 #ifdef USE_MAGMA
 #include "magma.h"

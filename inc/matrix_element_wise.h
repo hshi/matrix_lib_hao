@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_ELEMENT_WISE
-#define MATRIX_HAO_ELEMENT_WISE
+#ifndef MATRIX_HAO_ELEMENT_WISE_H
+#define MATRIX_HAO_ELEMENT_WISE_H
 
 #include <cmath>
 

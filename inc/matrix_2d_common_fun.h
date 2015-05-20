@@ -1,5 +1,5 @@
-#ifndef MATRIX_2D_COMMON_FUN
-#define MATRIX_2D_COMMON_FUN
+#ifndef MATRIX_2D_COMMON_FUN_H
+#define MATRIX_2D_COMMON_FUN_H
 
 
 namespace matrix_hao_lib

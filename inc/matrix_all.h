@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_CLASS_ALL
-#define MATRIX_HAO_CLASS_ALL
+#ifndef MATRIX_HAO_CLASS_ALL_H
+#define MATRIX_HAO_CLASS_ALL_H
 
 #include "matrix_define.h"
 #include "matrix_base.h"

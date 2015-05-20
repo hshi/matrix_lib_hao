@@ -1,5 +1,5 @@
-#ifndef MATRIX_DEFINE
-#define MATRIX_DEFINE
+#ifndef MATRIX_DEFINE_H
+#define MATRIX_DEFINE_H
 
 #ifdef USE_MKL
 #include "mkl.h"

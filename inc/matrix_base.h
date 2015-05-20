@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_BASE
-#define MATRIX_HAO_BASE
+#ifndef MATRIX_HAO_BASE_H
+#define MATRIX_HAO_BASE_H
 
 #include <iostream>
 #include <iomanip>

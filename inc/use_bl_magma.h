@@ -1,5 +1,5 @@
-#ifndef USE_BL_MAGMA
-#define USE_BL_MAGMA
+#ifndef USE_BL_MAGMA_H
+#define USE_BL_MAGMA_H
 
 //WARNING: it is not safe to use this header
 //Another way to swith between cpu and gpu is: 

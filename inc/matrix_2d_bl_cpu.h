@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_BL_CPU
-#define MATRIX_HAO_BL_CPU
+#ifndef MATRIX_HAO_BL_CPU_H
+#define MATRIX_HAO_BL_CPU_H
 
 
 namespace matrix_hao_lib

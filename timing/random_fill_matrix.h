@@ -1,5 +1,5 @@
-#ifndef RANDOM_FILL_MATRIX
-#define RANDOM_FILL_MATRIX
+#ifndef RANDOM_FILL_MATRIX_H
+#define RANDOM_FILL_MATRIX_H
 
 namespace matrix_hao_lib
 {

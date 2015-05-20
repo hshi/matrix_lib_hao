@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_MPI
-#define MATRIX_HAO_MPI
+#ifndef MATRIX_HAO_MPI_H
+#define MATRIX_HAO_MPI_H
 
 #ifdef MPI_HAO
 

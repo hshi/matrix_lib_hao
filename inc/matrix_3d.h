@@ -1,5 +1,5 @@
-#ifndef MATRIX_HAO_3D
-#define MATRIX_HAO_3D
+#ifndef MATRIX_HAO_3D_H
+#define MATRIX_HAO_3D_H
 
 namespace matrix_hao_lib
 {

@@ -1,5 +1,5 @@
-#ifndef USE_BL_CPU
-#define USE_BL_CPU
+#ifndef USE_BL_CPU_H
+#define USE_BL_CPU_H
 
 //WARNING: it is not safe to use this header
 //Another way to swith between cpu and gpu is: 

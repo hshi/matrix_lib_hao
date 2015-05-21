@@ -292,6 +292,13 @@ namespace matrix_hao_lib
  /******************************/
  /*QR decompostion of matrix ph*/
  /******************************/
+
+
+//This QR does not give correct det(R) in large system size. 
+//Though it works well for small system size. Need to use the
+//CPU interface
+
+/*
  double QRMatrix_magma(Matrix<complex<double>,2>& ph)
  {
      //If we need to call magma two or more times, it's better 
@@ -328,6 +335,33 @@ namespace matrix_hao_lib
      if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
 
      magma_free(d_A); magma_free_cpu(tau); magma_free(dT);
+
+     return det.real();
+ }
+*/
+
+ double QRMatrix_magma(Matrix<complex<double>,2>& ph)
+ {
+     magma_int_t L=ph.L1; magma_int_t N=ph.L2; magma_int_t info;
+
+     magmaDoubleComplex* tau;  magma_zmalloc_cpu( &tau, N );
+
+     magmaDoubleComplex work_test[1]; magma_int_t lwork=-1;
+     magma_zgeqrf(L, N, (magmaDoubleComplex *)ph.base_array, L, tau, work_test, lwork, &info);
+
+     lwork=lround( MAGMA_Z_REAL(work_test[0]) );
+     magmaDoubleComplex* work;  magma_zmalloc_cpu( &work, lwork );
+     magma_zgeqrf(L, N, (magmaDoubleComplex *)ph.base_array, L, tau, work, lwork, &info);
+     if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
+
+     complex<double> det={1.0,0.0}; for (size_t i=0; i<ph.L2; i++)  det*=ph(i,i);
+     magma_zungqr2(L, N, N, (magmaDoubleComplex *)ph.base_array, L, tau, &info );
+     if(info!=0) {cout<<"magma_zungqr2 run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
+
+     //Reshape the phi to get positive det
+     if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
+
+     magma_free_cpu(tau); magma_free_cpu(work);
 
      return det.real();
  }

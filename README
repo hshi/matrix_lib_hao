@@ -14,3 +14,4 @@ The reason I only adopt the function part:
 3. We have CPU and GPU, there is no 'TPU' or 'VPU', I do not see a big advantage of polymorphism class here.
 However, anyone who is interested in the polymorphism class, and want to use it, please check https://github.com/yvirgus/matrix_lib_hao for more details.
 
+This project is licensed under the terms of the MIT license.

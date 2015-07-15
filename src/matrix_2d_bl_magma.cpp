@@ -367,7 +367,7 @@ namespace matrix_hao_lib
  }
 
 
- vector<double> QRMatrixVec_magma(Matrix<complex<double>,2>& ph)
+ double QRMatrix_magma(Matrix<complex<double>,2>& ph, vector<double>& detVec)
  {
      magma_int_t L=ph.L1; magma_int_t N=ph.L2; magma_int_t info;
 
@@ -381,7 +381,7 @@ namespace matrix_hao_lib
      magma_zgeqrf(L, N, (magmaDoubleComplex *)ph.base_array, L, tau, work, lwork, &info);
      if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
-     vector<double> detVec(ph.L2); complex<double> det={1.0,0.0}; 
+     detVec.resize(ph.L2); complex<double> det={1.0,0.0}; 
      for (size_t i=0; i<ph.L2; i++)  {detVec[i]=abs(ph(i,i).real()); det*=ph(i,i);}
      magma_zungqr2(L, N, N, (magmaDoubleComplex *)ph.base_array, L, tau, &info );
      if(info!=0) {cout<<"magma_zungqr2 run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
@@ -391,7 +391,7 @@ namespace matrix_hao_lib
 
      magma_free_cpu(tau); magma_free_cpu(work);
 
-     return detVec;
+     return det.real();
  
 } //end namespace matrix_hao_lib
 

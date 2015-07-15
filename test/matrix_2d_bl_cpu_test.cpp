@@ -207,7 +207,7 @@ namespace matrix_hao_lib
                                         {3.0,-6.0},   {2.0,1.0},    {6.123,3.11},} };
      Matrix<complex<double>,2> B(A);
      double det=QRMatrix_cpu(A);
-     vector<double> detVec=QRMatrixVec_cpu(B);
+     vector<double> detVec; double detVecM=QRMatrix_cpu(B,detVec);
      Matrix<complex<double>,2> A_exact={3,2,{ {0.26392384387316437, 0} ,   
                                               {0.3958857658097466 , 0.6598096096829109},    
                                               {0.41211708220794624, 0.41040157722277065},
@@ -225,7 +225,8 @@ namespace matrix_hao_lib
      {
          for(size_t j=0; j<A_exact.L2; j++) {if(abs( A(i,j)-B(i,j) )>1e-12) flag++;} 
      }
-     double detVecM=1.0; for(size_t i=0; i<detVec.size(); i++) detVecM*=detVec[i];
+     if(abs(det-detVecM)>1e-12) flag++;
+     detVecM=1.0; for(size_t i=0; i<detVec.size(); i++) detVecM*=detVec[i];
      if(abs(det-detVecM)>1e-12) flag++;
 
      if(flag==0) cout<<"QRMatrix_cpu passed complex double test! \n";

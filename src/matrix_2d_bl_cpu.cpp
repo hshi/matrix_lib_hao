@@ -209,7 +209,7 @@ namespace matrix_hao_lib
      return det.real();
  }
 
- vector<double> QRMatrixVec_cpu(Matrix<complex<double>,2>& ph)
+ double QRMatrix_cpu(Matrix<complex<double>,2>& ph, vector<double>& detVec)
  {
      BL_INT L=ph.L1; BL_INT N=ph.L2; BL_INT info;
      BL_INT lwork=-1; complex<double> work_test[1];
@@ -222,7 +222,7 @@ namespace matrix_hao_lib
      FORTRAN_NAME(zgeqrf) (&L,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
      if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
-     vector<double> detVec(ph.L2); complex<double> det={1.0,0.0};
+     detVec.resize(ph.L2); complex<double> det={1.0,0.0};
      for (size_t i=0; i<ph.L2; i++)  {detVec[i]=abs(ph(i,i).real()); det*=ph(i,i);}
 
      FORTRAN_NAME(zungqr) (&L,&N,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
@@ -232,6 +232,7 @@ namespace matrix_hao_lib
 
      delete[] tau;delete[] work;
 
-     return detVec;
+     return det.real();
  }
+
 } //end namespace matrix_hao_lib

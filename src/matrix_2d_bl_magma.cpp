@@ -392,6 +392,7 @@ namespace matrix_hao_lib
      magma_free_cpu(tau); magma_free_cpu(work);
 
      return det.real();
+ }
  
 } //end namespace matrix_hao_lib
 

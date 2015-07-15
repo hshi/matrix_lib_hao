@@ -209,4 +209,29 @@ namespace matrix_hao_lib
      return det.real();
  }
 
+ vector<double> QRMatrixVec_cpu(Matrix<complex<double>,2>& ph)
+ {
+     BL_INT L=ph.L1; BL_INT N=ph.L2; BL_INT info;
+     BL_INT lwork=-1; complex<double> work_test[1];
+     complex<double>* tau= new complex<double>[N];
+
+     FORTRAN_NAME(zgeqrf) (&L,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work_test,&lwork,&info);
+
+     lwork=lround(work_test[0].real());
+     complex<double>* work= new complex<double>[lwork];
+     FORTRAN_NAME(zgeqrf) (&L,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
+     if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
+
+     vector<double> detVec(ph.L2); complex<double> det={1.0,0.0};
+     for (size_t i=0; i<ph.L2; i++)  {detVec[i]=abs(ph(i,i).real()); det*=ph(i,i);}
+
+     FORTRAN_NAME(zungqr) (&L,&N,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
+     if(info!=0) {cout<<"Zungqr run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
+
+     if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
+
+     delete[] tau;delete[] work;
+
+     return detVec;
+ }
 } //end namespace matrix_hao_lib

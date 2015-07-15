@@ -1,6 +1,7 @@
 #ifndef MATRIX_HAO_BL_CPU_H
 #define MATRIX_HAO_BL_CPU_H
 
+#include<vector>
 
 namespace matrix_hao_lib
 {
@@ -52,7 +53,7 @@ namespace matrix_hao_lib
  /*QR decompostion of matrix ph, return the determinant of R*/
  /***********************************************************/
  double QRMatrix_cpu(Matrix<std::complex<double>,2>& ph);
-
+ std::vector<double> QRMatrixVec_cpu(Matrix<std::complex<double>,2>& ph);
 
 }//end namespace matrix_hao_lib
 

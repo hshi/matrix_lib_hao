@@ -223,12 +223,17 @@ namespace matrix_hao_lib
      if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
      detVec.resize(ph.L2); complex<double> det={1.0,0.0};
-     for (size_t i=0; i<ph.L2; i++)  {detVec[i]=abs(ph(i,i).real()); det*=ph(i,i);}
+     for (size_t i=0; i<ph.L2; i++)  {detVec[i]=ph(i,i).real(); det*=ph(i,i);}
 
      FORTRAN_NAME(zungqr) (&L,&N,&N,(BL_COMPLEX16* )ph.base_array,&L,(BL_COMPLEX16* )tau,(BL_COMPLEX16* )work,&lwork,&info);
      if(info!=0) {cout<<"Zungqr run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
-     if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
+     if(det.real()<0) 
+     {
+        det=-det; 
+        detVec[0]=-detVec[0]; 
+        for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);
+     }
 
      delete[] tau;delete[] work;
 

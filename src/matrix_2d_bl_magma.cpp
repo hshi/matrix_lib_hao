@@ -382,12 +382,17 @@ namespace matrix_hao_lib
      if(info!=0) {cout<<"QR run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
      detVec.resize(ph.L2); complex<double> det={1.0,0.0}; 
-     for (size_t i=0; i<ph.L2; i++)  {detVec[i]=abs(ph(i,i).real()); det*=ph(i,i);}
+     for (size_t i=0; i<ph.L2; i++)  {detVec[i]=ph(i,i).real(); det*=ph(i,i);}
      magma_zungqr2(L, N, N, (magmaDoubleComplex *)ph.base_array, L, tau, &info );
      if(info!=0) {cout<<"magma_zungqr2 run is not suceesful: "<<info<<"-th parameter is illegal! \n"; exit(1);}
 
      //Reshape the phi to get positive det
-     if(det.real()<0) {det=-det; for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);}
+     if(det.real()<0) 
+     {
+        det=-det;
+        detVec[0]=-detVec[0]; 
+        for(size_t i=0; i<ph.L1; i++) ph(i,0)=-ph(i,0);
+     }
 
      magma_free_cpu(tau); magma_free_cpu(work);
 

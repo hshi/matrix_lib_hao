@@ -42,6 +42,12 @@ namespace matrix_hao_lib
  /*Diagonal array multipy matrix*/
  /*******************************/
  Matrix<std::complex<double>,2> D_Multi_Matrix(const Matrix<std::complex<double>,1>& D,const Matrix<std::complex<double>,2>& ph);
+
+  /**********************/
+ /*Pfaffian of a matrix*/
+ /**********************/
+ void check_skew_symmetric(const Matrix<std::complex<double>,2>& A);
+ std::complex<double> Pfaffian(Matrix<std::complex<double>,2>& A);
  
 }//end namespace matrix_hao_lib
 

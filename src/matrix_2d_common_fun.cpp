@@ -92,5 +92,35 @@ namespace matrix_hao_lib
      }
      return ph_new; 
  }
+
+
+ /******************************************/
+ /*Check skew symmetric of the matrix*******/
+ /******************************************/
+ void check_skew_symmetric(const Matrix<complex<double>,2>& A)
+ {
+     if(A.L1!=A.L2) {cout<<"Input for skew_symmetric is not square matrix! \n"; exit(1);}
+     double error=0; double norm=0;
+     for(size_t i=0; i<A.L1; i++)
+     {
+         for(size_t j=i; j<A.L2; j++)
+         {
+             error+=abs( A(i,j)+A(j,i) );
+             norm+=abs(A(i,j));
+         }
+     }
+     norm/=(A.L_f()*1.0); 
+     if(error/norm>1e-12) cout<<"Warning!!!!!Matrix is not skew symmetric!";
+ }
+
+
+ /**********************/
+ /*Pfaffian of a matrix*/
+ /**********************/
+ complex<double> Pfaffian(Matrix<complex<double>,2>& A)
+ {
+    if(A.L1!=A.L2) {cout<<"pfaffian input error: A.L1!=A.L2! \n"; exit(1);}
+    return pfaffian_aitken(A.base_array, A.L1, A.L2);
+ }
  
 } //end namespace matrix_hao_lib

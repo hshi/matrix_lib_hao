@@ -1,6 +1,7 @@
 #ifndef MATRIX_HAO_CLASS_ALL_H
 #define MATRIX_HAO_CLASS_ALL_H
 
+#include "pfaffian_utilities.h"
 #include "matrix_define.h"
 #include "matrix_base.h"
 #include "matrix_1d.h"

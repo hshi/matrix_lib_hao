@@ -88,12 +88,26 @@ namespace matrix_hao_lib
  }
 
 
+ void pfaffian_test()
+ {
+     Matrix<complex<double>,2> A={4,4,{ {0.0,0.0},  {1.0,2.0},  {1.5,0.0}, {2.3,0.0}, 
+                                        {-1.0,-2.0},{0.0,0.0},  {-3.0,0.0},{1.5,0.0}, 
+                                        {-1.5,0.0}, {3.0,0.0},  {0.0,0.0}, {-2.5,-5.3},
+                                        {-2.3,0.0}, {-1.5,0.0}, {2.5,5.3}, {0.0,0.0} } };
+     check_skew_symmetric(A);
+     complex<double> pf=Pfaffian(A);
+     complex<double> exact{-1.05,-10.3};
+     if( abs(pf-exact)< 1e-13 ) cout<<"Pfaffian passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! Pfaffian failed complex double test! \n";
+ }
+
  void matrix_2d_common_fun_test()
  {
      LUDecomp_test();
      determinant_test();
      log_determinant_test();
      D_Multi_Matrix_test();
+     pfaffian_test();
  }
 
 } //end namespace matrix_hao_lib

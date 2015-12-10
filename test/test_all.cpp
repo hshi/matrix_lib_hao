@@ -8,6 +8,9 @@ namespace matrix_hao_lib
 #ifdef USE_MAGMA
  void matrix_2d_bl_magma_test();
 #endif
+#ifdef MPI_HAO
+ void matrix_mpi_test();
+#endif
 }
 
 using namespace std;

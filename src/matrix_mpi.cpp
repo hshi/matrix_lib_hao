@@ -7,6 +7,7 @@ using namespace std;
 namespace matrix_hao_lib
 {
 
+  //WARNING!!! We need to make sure buffer has the same size before call MPIBcast!
   //buffer.L,buffer.own, buffer.type, buffer.Li do not need to be changed
 
  void MPIBcast(Matrix<double,1>& buffer, int root,  const MPI_Comm& comm)

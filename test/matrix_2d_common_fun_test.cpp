@@ -103,11 +103,21 @@ namespace matrix_hao_lib
 
  void matrix_2d_common_fun_test()
  {
-     LUDecomp_test();
-     determinant_test();
-     log_determinant_test();
-     D_Multi_Matrix_test();
-     pfaffian_test();
+    int rank=0;
+#ifdef MPI_HAO
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+#endif
+
+    if(rank==0)
+    {
+        LUDecomp_test();
+        determinant_test();
+        log_determinant_test();
+        D_Multi_Matrix_test();
+        pfaffian_test();
+    }
+
+    if(rank==0) cout<<"\n";
  }
 
 } //end namespace matrix_hao_lib

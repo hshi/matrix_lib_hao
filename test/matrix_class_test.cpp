@@ -173,14 +173,23 @@ namespace matrix_hao_lib
 
  void matrix_class_test()
  {
-     matrix_diff_test();
-     matrix_1d_c_slicing();
-     matrix_2d_c_slicing();
-     matrix_3d_c_slicing();
-     matrix_conj_test();
-     matrix_2d_trans_conjtrans_test();
-     matrix_exp_test();
-     return;
+    int rank=0;
+#ifdef MPI_HAO
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+#endif
+
+    if(rank==0)
+    {
+        matrix_diff_test();
+        matrix_1d_c_slicing();
+        matrix_2d_c_slicing();
+        matrix_3d_c_slicing();
+        matrix_conj_test();
+        matrix_2d_trans_conjtrans_test();
+        matrix_exp_test();
+    }
+
+    if(rank==0) cout<<"\n";
  }
 
 }

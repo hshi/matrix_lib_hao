@@ -239,16 +239,26 @@ namespace matrix_hao_lib
 
  void matrix_2d_bl_cpu_test()
  {
-     gmm_cpu_float_test();
-     gmm_cpu_double_test();
-     gmm_cpu_complexfloat_test();
-     gmm_cpu_complexdouble_test();
-     eigen_cpu_double_test();
-     eigen_cpu_complexdouble_test();
-     LUconstruct_cpu_test();
-     inverse_cpu_test();
-     solve_lineq_cpu_test();
-     QRMatrix_cpu_test();
+    int rank=0;
+#ifdef MPI_HAO
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+#endif
+
+    if(rank==0)
+    {
+        gmm_cpu_float_test();
+        gmm_cpu_double_test();
+        gmm_cpu_complexfloat_test();
+        gmm_cpu_complexdouble_test();
+        eigen_cpu_double_test();
+        eigen_cpu_complexdouble_test();
+        LUconstruct_cpu_test();
+        inverse_cpu_test();
+        solve_lineq_cpu_test();
+        QRMatrix_cpu_test();
+    }
+
+    if(rank==0) cout<<"\n";
  }
 
 } //end namespace matrix_hao_lib

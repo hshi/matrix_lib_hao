@@ -236,16 +236,26 @@ namespace matrix_hao_lib
 
  void matrix_2d_bl_magma_test()
  {
-     gmm_magma_float_test();
-     gmm_magma_double_test();
-     gmm_magma_complexfloat_test();
-     gmm_magma_complexdouble_test();
-     eigen_magma_double_test();
-     eigen_magma_complexdouble_test();
-     LUconstruct_magma_test();
-     inverse_magma_test();
-     solve_lineq_magma_test();
-     QRMatrix_magma_test();
+    int rank=0;
+#ifdef MPI_HAO
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+#endif
+
+    if(rank==0)
+    {
+        gmm_magma_float_test();
+        gmm_magma_double_test();
+        gmm_magma_complexfloat_test();
+        gmm_magma_complexdouble_test();
+        eigen_magma_double_test();
+        eigen_magma_complexdouble_test();
+        LUconstruct_magma_test();
+        inverse_magma_test();
+        solve_lineq_magma_test();
+        QRMatrix_magma_test();
+    }
+
+    if(rank==0) cout<<"\n";
  }
 
 } //end namespace matrix_hao_lib

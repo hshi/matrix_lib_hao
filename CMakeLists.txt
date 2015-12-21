@@ -13,14 +13,11 @@ set(CMAKE_CXX_FLAGS "${COMPILER_EXTRA_FLAG}" ${CMAKE_CXX_FLAGS})
 
 # For lapackblas library
 find_package(acml)
+find_package(mkl)
 if(ACML_FOUND)
   add_definitions(-DUSE_ACML)
   set(lapackblas_libraries "${acml_libraries}")
-endif()
-
-
-find_package(mkl)
-if(MKL_FOUND)
+elseif(MKL_FOUND)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -m64")
   add_definitions(-DUSE_MKL)
   include_directories(${mkl_include_dirs})

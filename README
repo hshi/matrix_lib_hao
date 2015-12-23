@@ -6,7 +6,7 @@ The c++ matrix library, it supports many dimension array and uses lapack blas li
 NOTE: To enable MAGMA support, specify `-DUSE_MAGMA=on' option when running cmake.
 
 Acknowledgment:
-Yudistira Virgus (https://github.com/yvirgus ) and Wirawan Purwanto(https://github.com/wirawan0) contributed to the Magma part. Only the function part of Magma is imported to current library. They even use the polymorphism class to switch between Magma and normal lapack/blas, which can be found from Yudistira's github. 
+Yudistira Virgus (https://github.com/yvirgus ) and Wirawan Purwanto(https://github.com/wirawan0) contributed to the Magma part. Only the function part of Magma is imported to current library. They even use the polymorphism class to switch between Magma and normal lapack/blas, which can be found in Yudistira's github. 
 
 The reason I only adopt the function part:
 1. It is more readable and understandable.

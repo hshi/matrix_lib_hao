@@ -146,9 +146,8 @@ namespace matrix_hao_lib
  /*Inverse of  Matrix: If determinant of the matrix is outof machine precision, inverse should be fine, since it solve*
   *The linear equation, every small value is well defined                                                             */
  /*********************************************************************************************************************/
- Matrix<complex<double>,2> inverse_cpu(const LUDecomp<complex<double>>& x)
+ void inverse_cpu_utilities(const Matrix<complex<double>,2>& A, const LUDecomp<complex<double>>& x)
  {
-     Matrix<complex<double>,2> A=x.A; //We know x.A own the matrix
      BL_INT N=A.L1; BL_INT info;
 
      BL_INT lwork=-1; complex<double> work_test[1];
@@ -158,8 +157,20 @@ namespace matrix_hao_lib
      complex<double>* work= new complex<double>[lwork];
      FORTRAN_NAME(zgetri)(&N,(BL_COMPLEX16* )A.base_array,&N,x.ipiv.base_array,(BL_COMPLEX16* )work,&lwork,&info);
      if(info<0) {cout<<"The "<<info<<"-th parameter is illegal!\n"; exit(1);}
-     delete[] work; 
+     delete[] work;
+ }
 
+ Matrix<complex<double>,2> inverse_cpu(const LUDecomp<complex<double>>& x)
+ {
+     Matrix<complex<double>,2> A=x.A; //We know x.A own the matrix
+     inverse_cpu_utilities(A, x); 
+     return A;
+ }
+
+ Matrix<complex<double>,2> inverse_cpu(LUDecomp<complex<double>>&& x)
+ {
+     Matrix<complex<double>,2> A=move(x.A); //We know x.A own the matrix
+     inverse_cpu_utilities(A, x);
      return A;
  }
 
@@ -169,7 +180,7 @@ namespace matrix_hao_lib
  Matrix<complex<double>,2> solve_lineq_cpu(const LUDecomp<complex<double>>& x, const Matrix<complex<double>,2>& B, char TRANS)
  {
      if(x.A.L1!=B.L1)  {cout<<"Input size for solving linear equation is not consistent!\n"; exit(1);}
-     Matrix<complex<double>,2> M; M=B;
+     Matrix<complex<double>,2> M; M=B;  //B might not own itself, we'd better use equal assigment instead of equal construction.
      BL_INT N=B.L1; BL_INT NRHS=B.L2; BL_INT info;
      FORTRAN_NAME(zgetrs)(&TRANS,&N,&NRHS,(BL_COMPLEX16* )x.A.base_array,&N,x.ipiv.base_array,(BL_COMPLEX16* )M.base_array,&N,&info);
      if(info!=0) 

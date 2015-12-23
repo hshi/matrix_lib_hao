@@ -40,6 +40,7 @@ namespace matrix_hao_lib
  /*Inverse of  Matrix*/
  /********************/
  Matrix<std::complex<double>,2> inverse_cpu(const LUDecomp<std::complex<double>>& x);
+ Matrix<std::complex<double>,2> inverse_cpu(LUDecomp<std::complex<double>>&& x);
 
 
  /******************************************************/

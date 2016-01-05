@@ -21,7 +21,7 @@ namespace matrix_hao_lib
          }
      }
      norm/=(A.L_f()*1.0);
-     if(error/norm>1e-12) cout<<"Warning!!!!!Matrix is not Hermition!"<<endl;
+     if(error/norm>1e-12) cout<<"Warning!!!!!Matrix is not Hermition! "<<error<<" "<<norm<<endl;
  }
 
 
@@ -110,7 +110,7 @@ namespace matrix_hao_lib
          }
      }
      norm/=(A.L_f()*1.0); 
-     if(error/norm>1e-12) cout<<"Warning!!!!!Matrix is not skew symmetric!"<<endl;
+     if(error/norm>1e-12) cout<<"Warning!!!!!Matrix is not skew symmetric! "<<error<<" "<<norm<<endl;
  }
 
 

@@ -244,6 +244,29 @@ namespace matrix_hao_lib
      //cout<<det<<endl;
  }
 
+ void SVDMatrix_cpu_test()
+ {
+     Matrix<complex<double>,2> ph={3,3,{ {1.0,2.0}, {2.0,1.0}, {3.0,5.0},
+                                         {2.0,0.5}, {2.0,0.0}, {1.0,2.0}, 
+                                         {1.0,7.0}, {8.2,1.0}, {3.3,5.0}, } };
+     Matrix<double,1> D_exact={3, {14.003853260054132, 3.686182682653158, 1.2977484736955485} };
+
+     Matrix<complex<double>,2> U=ph;
+     Matrix<double,1> D(3);
+     Matrix<complex<double>,2> V(3,3);
+     SVDMatrix_cpu(U, D, V);
+
+     Matrix<complex<double>,1> D_cd(3);
+     Matrix<complex<double>,2> ph_back(3,3);
+     for(size_t i=0; i<D_cd.L1; i++) D_cd(i)=D(i);
+     gmm_cpu(U, D_Multi_Matrix(D_cd, V), ph_back);
+
+     size_t flag=0;
+     flag+=diff(D,D_exact,1e-13);
+     flag+=diff(ph,ph_back,1e-13);
+     if(flag==0) cout<<"SVDMatrix_cpu passed complex double test! \n";
+     else cout<<"WARNING!!!!!!!!! SVDMatrix_cpu failed complex double test! \n";
+ }
 
  void matrix_2d_bl_cpu_test()
  {
@@ -264,6 +287,7 @@ namespace matrix_hao_lib
         inverse_cpu_test();
         solve_lineq_cpu_test();
         QRMatrix_cpu_test();
+        SVDMatrix_cpu_test();
     }
 
     if(rank==0) cout<<"\n";

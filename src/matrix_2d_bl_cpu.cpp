@@ -251,4 +251,40 @@ namespace matrix_hao_lib
      return det.real();
  }
 
+ /*********************************************/
+ /*SVD a matrix ph = U D V, return U, D, and V*/
+ /*********************************************/
+ void SVDMatrix_cpu(Matrix<complex<double>,2>& ph, Matrix<double,1>& D, Matrix<complex<double>,2>& V)
+ {
+     if(ph.L1!=ph.L2 || ph.L2!=D.L1 || D.L1!=V.L1 || V.L1!=V.L2) 
+     { 
+         cout<<"Size is not consistent in SVDMatrix_cpu! Only support square matrix."<<endl; 
+         exit(1); 
+     }
+
+     BL_INT m=ph.L1; BL_INT n=V.L1;
+     char jobz='O'; BL_INT lda=m;
+     BL_COMPLEX16* u=nullptr; BL_INT ldu=1; BL_INT ldv=n;
+     complex<double> work_test[1]; BL_INT lwork=-1;
+     BL_DOUBLE* rwork=new BL_DOUBLE[5*m*m+7*m]; BL_INT* iwork= new BL_INT[8*m];
+     BL_INT info;
+
+     FORTRAN_NAME(zgesdd)(&jobz, &m, &n, (BL_COMPLEX16* )ph.base_array, &lda, (BL_DOUBLE* )D.base_array, u, &ldu,
+                          (BL_COMPLEX16* )V.base_array, &ldv, (BL_COMPLEX16* )work_test, &lwork, rwork, iwork, &info);
+
+     lwork=lround(work_test[0].real());
+     BL_COMPLEX16* work= new BL_COMPLEX16[lwork];
+
+     FORTRAN_NAME(zgesdd)(&jobz, &m, &n, (BL_COMPLEX16* )ph.base_array, &lda, (BL_DOUBLE* )D.base_array, u, &ldu,
+                          (BL_COMPLEX16* )V.base_array, &ldv, work, &lwork, rwork, iwork, &info);
+
+     delete[] rwork; delete[] iwork; delete[] work;
+
+     if(info!=0)
+     {
+         cout<<"SVDMatrix_cpu is not suceesful, info= "<<info<<endl;
+         exit(1);
+     }
+ }
+
 } //end namespace matrix_hao_lib

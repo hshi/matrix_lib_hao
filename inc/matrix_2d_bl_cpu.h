@@ -56,6 +56,11 @@ namespace matrix_hao_lib
  double QRMatrix_cpu(Matrix<std::complex<double>,2>& ph);
  double QRMatrix_cpu(Matrix<std::complex<double>,2>& ph, std::vector<double>& detVec);
 
+ /*********************************************/
+ /*SVD a matrix ph = U D V, return U, D, and V*/
+ /*********************************************/
+ void SVDMatrix_cpu(Matrix<std::complex<double>,2>& ph, Matrix<double,1>& D, Matrix<std::complex<double>,2>& V);
+
 }//end namespace matrix_hao_lib
 
 #endif

@@ -1,9 +1,11 @@
-set(matrix_test_srcs matrix_2d_bl_cpu_test.cpp matrix_2d_bl_magma_test.cpp matrix_2d_common_fun_test.cpp 
-    matrix_class_test.cpp matrix_mpi_test.cpp test_all.cpp)
+set(test_exe matrixtest)
 
-add_executable(matrixtest ${matrix_test_srcs})
-target_link_libraries(matrixtest matrixhao)
-target_link_libraries(matrixtest ${magma_libraries})
-target_link_libraries(matrixtest ${lapackblas_libraries})
+file(GLOB test_srcs "*.cpp")
 
-install(TARGETS matrixtest   DESTINATION test)
+add_executable(${test_exe} ${test_srcs})
+
+target_link_libraries(${test_exe} matrixhao)
+
+target_link_libraries(${test_exe} ${lib_all})
+
+install(TARGETS ${test_exe}  DESTINATION test)

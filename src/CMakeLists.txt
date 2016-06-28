@@ -1,5 +1,7 @@
-set(matrix_srcs matrix_2d_common_fun.cpp matrix_2d_bl_cpu.cpp matrix_2d_bl_magma.cpp matrix_mpi.cpp)
+set(src_lib matrixhao)
 
-add_library(matrixhao STATIC ${matrix_srcs})
+file(GLOB srcs "*.cpp")
 
-install(TARGETS matrixhao  DESTINATION lib)
+add_library(${src_lib} STATIC ${srcs})
+
+install(TARGETS ${src_lib}  DESTINATION lib)

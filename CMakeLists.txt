@@ -11,6 +11,8 @@ add_definitions(${COMPILER_EXTRA_DEF})
 #For c++ flag
 set(CMAKE_CXX_FLAGS "${COMPILER_EXTRA_FLAG}" ${CMAKE_CXX_FLAGS})
 
+set(lib_all "")
+
 # For lapackblas library
 find_package(acml)
 find_package(mkl)
@@ -24,7 +26,9 @@ elseif(MKL_FOUND)
   include_directories(${mkl_include_dirs})
   set(lapackblas_libraries "${mkl_libraries}")
 endif()
+set(lib_all ${lapackblas_libraries} ${lib_all})
 
+#For magma library
 if(USE_MAGMA)
   add_definitions(-DUSE_MAGMA)
   # Use standard FindCUD
@@ -36,6 +40,7 @@ if(USE_MAGMA)
 else()
   MESSAGE("-- MAGMA support was disabled.")
 endif()
+set(lib_all ${magma_libraries} ${lib_all})
 
 include_directories(inc)
 

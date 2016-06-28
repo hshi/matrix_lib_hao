@@ -1,8 +1,11 @@
-set(matrix_timing_srcs bl_cpu_magma_timing.cpp timing_all.cpp)
+set(time_exe matrixtiming)
 
-add_executable(matrixtiming ${matrix_timing_srcs})
-target_link_libraries(matrixtiming matrixhao)
-target_link_libraries(matrixtiming ${magma_libraries})
-target_link_libraries(matrixtiming ${lapackblas_libraries})
+file(GLOB time_srcs "*.cpp")
 
-install(TARGETS matrixtiming DESTINATION timing)
+add_executable(${time_exe} ${time_srcs})
+
+target_link_libraries(${time_exe} matrixhao)
+
+target_link_libraries(${time_exe} ${lib_all})
+
+install(TARGETS ${time_exe}  DESTINATION timing)

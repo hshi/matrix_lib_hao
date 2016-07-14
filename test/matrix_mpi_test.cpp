@@ -73,7 +73,7 @@ namespace matrix_hao_lib
      MPIBcast_complex_double_three_test();
 
      MPI_Barrier(MPI_COMM_WORLD);
-     if(rank==0) cout<<"\n\nIf these is no warning, we have passed all the test!"<<endl; 
+     if(rank==0) cout<<"PASSED! If these is no warning, we have passed all the test!"<<endl; 
  }
 
 }

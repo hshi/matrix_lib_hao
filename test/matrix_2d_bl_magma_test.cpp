@@ -16,8 +16,8 @@ namespace matrix_hao_lib
      Matrix<float,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
      gmm_magma(a,b,c);
      size_t flag=diff(c,c_exact,1e-5);
-     if(flag==0) cout<<"Gmm_magma passed float test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm_magma failed float test! \n";
+     if(flag==0) cout<<"PASSED! Gmm_magma passed float test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Gmm_magma failed float test!"<<endl;
  }
 
 
@@ -31,8 +31,8 @@ namespace matrix_hao_lib
      Matrix<double,2> c_exact={2,2,{14.861,12.630129,20.984,23.753129}};
      gmm_magma(a,b,c,'T');
      size_t flag=diff(c,c_exact,1e-13);
-     if(flag==0) cout<<"Gmm_magma passed double test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm_magma failed double test! \n";
+     if(flag==0) cout<<"PASSED! Gmm_magma passed double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Gmm_magma failed double test!"<<endl;
  }
 
 
@@ -49,8 +49,8 @@ namespace matrix_hao_lib
                                        };
      gmm_magma(a,b,c,'N','T');
      size_t flag=diff(c,c_exact,1e-5);
-     if(flag==0) cout<<"Gmm_magma passed complex float test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm_magma failed complex float test! \n";
+     if(flag==0) cout<<"PASSED! Gmm_magma passed complex float test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Gmm_magma failed complex float test!"<<endl;
  }
 
 
@@ -68,8 +68,8 @@ namespace matrix_hao_lib
                                        }; 
      gmm_magma(a,b,c,'T','T');
      size_t flag=diff(c,c_exact,1e-13);
-     if(flag==0) cout<<"Gmm_magma passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Gmm_magma failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Gmm_magma passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Gmm_magma failed complex double test!"<<endl;
  }
 
 
@@ -96,8 +96,8 @@ namespace matrix_hao_lib
              }
      }
      flag+=diff(w,w_exact,1e-13);
-     if(flag==0) cout<<"Eigen_magma passed Real symmetric test! \n";
-     else cout<<"WARNING!!!!!!!!! Eigen_magma failed symmetric test! \n";
+     if(flag==0) cout<<"PASSED! Eigen_magma passed Real symmetric test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Eigen_magma failed symmetric test!"<<endl;
  } 
 
 
@@ -131,8 +131,8 @@ namespace matrix_hao_lib
              }
      }
      flag+=diff(w,w_exact,1e-13);
-     if(flag==0) cout<<"Eigen_magma passed Hermition test! \n";
-     else cout<<"WARNING!!!!!!!!! Eigen_magma failed Hermintion test! \n";
+     if(flag==0) cout<<"PASSED! Eigen_magma passed Hermition test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Eigen_magma failed Hermintion test!"<<endl;
  }
 
 
@@ -150,8 +150,8 @@ namespace matrix_hao_lib
 
      size_t flag=diff(LU.A,A_exact,1e-13); 
 
-     if(flag==0) cout<<"LUconstruct_magma passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! LUconstruct_magma failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! LUconstruct_magma passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! LUconstruct_magma failed complex double test!"<<endl;
  }
 
 
@@ -171,8 +171,8 @@ namespace matrix_hao_lib
                                               {-0.12306156095719788,-0.04540218264765162} } };
      A=inverse_magma( LUconstruct_magma(A) );
      size_t flag=diff(A,A_exact,1e-13);
-     if(flag==0) cout<<"Inverse_magma passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Inverse_magma failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Inverse_magma passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Inverse_magma failed complex double test!"<<endl;
  }
 
 
@@ -192,8 +192,8 @@ namespace matrix_hao_lib
      Matrix<complex<double>,2> X=solve_lineq_magma( LUconstruct_magma(A),B );
 
      size_t flag=diff(X,X_exact,1e-13);
-     if(flag==0) cout<<"Solve_lineq_magma passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Solve_lineq_magma failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Solve_lineq_magma passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Solve_lineq_magma failed complex double test!"<<endl;
 
  } 
 
@@ -227,8 +227,8 @@ namespace matrix_hao_lib
      detVecM=1.0; for(size_t i=0; i<detVec.size(); i++) detVecM*=detVec[i];
      if(abs(det-detVecM)>1e-12) flag++;
 
-     if(flag==0) cout<<"QRMatrix_magma passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! QRMatrix_magma failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! QRMatrix_magma passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! QRMatrix_magma failed complex double test!"<<endl;
      //cout<<setprecision(16);
      //cout<<A<<endl;
      //cout<<det<<endl;
@@ -255,7 +255,7 @@ namespace matrix_hao_lib
         QRMatrix_magma_test();
     }
 
-    if(rank==0) cout<<"\n";
+    if(rank==0) cout<<" "<<endl;
  }
 
 } //end namespace matrix_hao_lib

@@ -12,8 +12,8 @@ namespace matrix_hao_lib
      Matrix<complex<double>,2>    B={2,3,{ {0.2,1.0},{5.0,2.0},{0.123,0.3121},
                                            {0.0,2.0},{3.0,4.0},{0.123,0.21222} }};
      size_t flag=diff(A,B,1e-12);
-     if(flag==3) cout<<"Matrix diff passed 2D complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix diff failed 2D complex double test! \n";
+     if(flag==3) cout<<"PASSED! Matrix diff passed 2D complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix diff failed 2D complex double test!"<<endl;
  }
 
  void matrix_1d_c_slicing()
@@ -29,8 +29,8 @@ namespace matrix_hao_lib
      A[1]=2.0;
      if(abs(A(1)-2.0)>1e-12) flag++;
 
-     if(flag==0) cout<<"Matrix_1d slicing passed double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix_1d slicing failed double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix_1d slicing passed double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix_1d slicing failed double test!"<<endl;
  }
 
  void matrix_2d_c_slicing()
@@ -45,7 +45,7 @@ namespace matrix_hao_lib
      //Only way to get the link matrix is use Matrix<double,1> B=A[1] !!!!!
 
 
-     if(B.owns) cout<<"WARNING!!!!!!!!! Matrix_2d slicing failed double test! B.owns:"<<B.owns<<"\n";
+     if(B.owns) cout<<"WARNING!!!!!!!!! Matrix_2d slicing failed double test! B.owns:"<<B.owns<<endl;
      for(size_t i=0; i<B.L1; i++)
      {
          if(abs(B[i]-A(i,1))>1e-12) flag++;
@@ -57,8 +57,8 @@ namespace matrix_hao_lib
      {
          if(abs(B[i]-C(i))>1e-12) flag++;
      }
-     if(flag==0) cout<<"Matrix_2d slicing passed double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix_2d slicing failed double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix_2d slicing passed double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix_2d slicing failed double test!"<<endl;
 
      //cout<<A;
  }
@@ -78,7 +78,7 @@ namespace matrix_hao_lib
                              }};
 
      size_t flag=0;
-     if(B.owns) cout<<"WARNING!!!!!!!!! Matrix_3d slicing failed complex double test! B.owns:"<<B.owns<<"\n";
+     if(B.owns) cout<<"WARNING!!!!!!!!! Matrix_3d slicing failed complex double test! B.owns:"<<B.owns<<endl;
      for(size_t i=0; i<B.L1; i++)
      {
          for(size_t j=0; j<B.L2; j++)
@@ -96,8 +96,8 @@ namespace matrix_hao_lib
              if(abs(B(i,j)-C(i,j))>1e-12) flag++;
          }
      }
-     if(flag==0) cout<<"Matrix_3d slicing passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix_3d slicing failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix_3d slicing passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix_3d slicing failed complex double test!"<<endl;
 
      //cout<<B;
  }
@@ -123,8 +123,8 @@ namespace matrix_hao_lib
          }
      }
 
-     if(flag==0) cout<<"Matrix conj passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix conj failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix conj passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix conj failed complex double test!"<<endl;
 
      //Matrix<complex<double>,3>    TMP={2,2,2,{ {0.0,1.0},{5.0,2.0},{0.123,0.31},
      //                                          {0.0,2.0},{3.0,4.0},{0.123,0.21},{5.0,2.0},{0.123,0.31} }};
@@ -154,8 +154,8 @@ namespace matrix_hao_lib
      //cout<<B<<endl;
      //cout<<C<<endl;
 
-     if(flag==0) cout<<"Matrix 2d conj trans passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix 2d conj trans failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix 2d conj trans passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix 2d conj trans failed complex double test!"<<endl;
  }
 
  void matrix_exp_test()
@@ -165,8 +165,8 @@ namespace matrix_hao_lib
      Matrix<complex<double>,1>    D=exp(C);
      size_t flag=0;
      for(size_t i=0; i<C.L1; i++)  {if(abs(D(i)-exp(C(i)))>1e-12) flag++;}
-     if(flag==0) cout<<"Matrix exp passed complex double test! \n";
-     else cout<<"WARNING!!!!!!!!! Matrix exp failed complex double test! \n";
+     if(flag==0) cout<<"PASSED! Matrix exp passed complex double test!"<<endl;
+     else cout<<"WARNING!!!!!!!!! Matrix exp failed complex double test!"<<endl;
      //cout<<flag<<endl;
  }
 
@@ -189,7 +189,7 @@ namespace matrix_hao_lib
         matrix_exp_test();
     }
 
-    if(rank==0) cout<<"\n";
+    if(rank==0) cout<<" "<<endl;
  }
 
 }

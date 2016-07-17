@@ -1,6 +1,9 @@
 matrix_lib_hao
 ==============
 
+THE LIBRARY IS NOT MANTIANED ANY MORE!!!!
+PLEASE USE THE NEW LIBRARY TENSOR_LIB_HAO! IT SUPPORT ANY DIMENSION, ANY THE LOGICAL STRUCTURE IS BETTER!
+
 The c++ matrix library, it supports many dimension array and uses lapack blas libaray. We can use both mkl, acml, and magma (CPU+GPU). There is a customed acml.h (not 64, not mp version) header file for using acml.
 
 NOTE: To enable MAGMA support, specify `-DUSE_MAGMA=on' option when running cmake.
